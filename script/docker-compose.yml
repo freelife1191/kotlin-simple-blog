@@ -1,0 +1,49 @@
+# 참조 블로그 https://blog.osg.kr/archives/186
+# docker compose 버전 현재 최신버전은 3으로 기입하면됨
+version: '3.9'
+
+# 서비스 정의
+services:
+  # 서비스 이름 임의 지정
+  mariadb:
+    # 컨테이명 지정
+    container_name: mariadb
+    # 패스워드 예전방식 설정 --default-authentication-plugin=mysql_native_password
+    # utf8 설정과 default-time-zone 설정 시  +9:00로 주어 UTC에 9시간을 더한 시각으로 Seoul 표준시 적용
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-time-zone=+9:00
+    # 사용할 이미지
+    image: mariadb:latest
+    # 컨테이너 종료 상태와 상관없이 항상 재시작
+    restart: always
+    # PORT 설정
+    ports:
+      - "3306:3306"
+    # 옵션
+    environment:
+      ## 패스워드는 .env에 설정
+      ## 패스워드 Parking!123@
+      # MYSQL_ROOT_PASSWORD_FILE: /run/secrets/mariadb-root-password
+      MYSQL_DATABASE: kotlinblog
+      # 일반 USER pkcmyam
+      # MYSQL_USER: ${MYSQL_USER}
+      # USER 패스워드 Parking!123@
+      # MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      # TZ 설정시 @@system_time_zone이 KST로 적용되어 버려 Application 접근시 문제가 있음
+      # TZ: Asia/Seoul
+    # 볼륨 마운트
+    volumes:
+      ## DB 서버는 서버 시간과 동기화 설정시 KST 설정이 되므로 제외시킴
+      #- /etc/timezone:/etc/timezone:ro
+      #- /etc/localtime:/etc/localtime:ro
+      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/conf.d:/etc/mysql/conf.d
+    # env 파일 설정 패스워드나 민감 정보는 env 파일에 설정
+    env_file:
+      - db.env
+    # 지정된 네트워크 간에 통신이 가능
+    #networks:
+    #  - backoffice-net
+
+# 네트워크 생성 생성 후 바로 위에 services 에 적용가능
+#networks:
+#  blog-net:
