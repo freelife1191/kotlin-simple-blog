@@ -3,7 +3,7 @@
 [스프링부트 + 코틀린 - 블로그 프로젝트](https://www.youtube.com/playlist?list=PLiLLi47PCMPjdezfGUnayz5PwEfwAQCBi)
 
 - [X] blog 1. 환경설정
-- [ ] blog 2. JPA Entity 생성
+- [X] blog 2. JPA Entity 생성
 - [ ] blog 3. Entity 연관관계 설정 및 더미데이터 생성
 - [ ] blog 4. Logback 설정
 - [ ] blog 5. dto entity 맵핑 1
@@ -67,3 +67,9 @@ docker compose -f script/docker-compose.yml up -d
 dev: aws ec2(프리티어) + s3 + codedeploy + github action
 back: springboot + kotlin + JPA
 front: react + typescript + zustand
+
+## blog 2. JPA Entity 생성
+유튜브와 다르게 구성
+
+- Post, Member, BaseEntity 추가 및 JPA 설정
+- SpringBoot 3 버전에서 Release된 spring-boot-docker-compose 적용

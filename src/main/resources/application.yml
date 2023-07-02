@@ -6,10 +6,17 @@ server:
       charset: UTF-8
       enabled: true
 spring:
-  h2:
-    console:
-      ## h2 console ??
-      enabled: true
+  # https://tpbabparn.medium.com/spring-boot-3-1-integrated-docker-compose-on-development-environment-spring-webflux-example-1ddcbfe052f
+  # https://levelup.gitconnected.com/spring-boot-3-1-comes-with-docker-compose-support-676fd8885db0
+  docker:
+    compose:
+      file: "./script/docker-compose.yml"
+      profiles:
+        active: debug
+  #  sql:
+#    init:
+#      schema-locations: classpath:schema.sql
+#      mode: always
   datasource:
     url: jdbc:mariadb://localhost:3306/kotlinblog?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
     username: test
@@ -21,15 +28,24 @@ spring:
 #    password:
 #    hikari:
 #      maximum-pool-size: 4
+#    h2:
+#      console:
+#        ## h2 console ??
+#        enabled: true
   jpa:
+#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+#    database-platform: org.hibernate.dialect.MySQL8Dialect
+    database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
-      ddl-auto: create
+      ddl-auto: create-drop
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     # https://gracelove91.tistory.com/100
     # false일 경우 트랜잭션을 종료할 때 영속성 컨텍스트 또한 닫힌다
     open-in-view: false # 세션 default true이지만 false로 처리
+    show-sql: true
     properties:
       hibernate:
         default_batch_fetch_size: 1000
         globally_quoted_identifiers: true # 테이블 네임을 quoted 문자로 감싸서 네이밍 충돌이 일어나지 않게 방지
+        format_sql: true
