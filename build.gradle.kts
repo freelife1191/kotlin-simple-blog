@@ -47,6 +47,11 @@ dependencies {
     // testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
     // testImplementation("org.springframework.security:spring-security-test")
     implementation(kotlin("stdlib-jdk8"))
+
+    // https://github.com/serpro69/kotlin-faker
+    // 더미 데이터 생성
+    implementation("io.github.serpro69:kotlin-faker:1.14.0")
+
 }
 
 tasks.withType<KotlinCompile> {

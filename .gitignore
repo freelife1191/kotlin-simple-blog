@@ -14,7 +14,9 @@ files/
 *.tar
 *.zip
 *.gz
-script/mariadb/**
+script/mariadb/data
+script/mariadb/initdb.d
+
 
 ### STS ###
 .apt_generated

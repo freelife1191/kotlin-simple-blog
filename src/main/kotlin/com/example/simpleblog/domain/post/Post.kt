@@ -1,6 +1,7 @@
 package com.example.simpleblog.domain.post
 
 import com.example.simpleblog.domain.BaseEntity
+import com.example.simpleblog.domain.member.Member
 import jakarta.persistence.*
 
 /**
@@ -13,6 +14,9 @@ class Post (
     var title: String,
 
     @Column(name = "content")
-    var content: String
+    var content: String,
+
+    @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
+    var member: Member
 
 ): BaseEntity()

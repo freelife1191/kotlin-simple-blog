@@ -9,10 +9,10 @@ import jakarta.persistence.*
 @Entity
 @Table(name = "Member")
 class Member (
-    @Column(name = "title", nullable = false)
+    @Column(name = "email", nullable = false)
     var email: String,
 
-    @Column(name = "content")
+    @Column(name = "password")
     var password: String,
 
     @Enumerated(EnumType.STRING)

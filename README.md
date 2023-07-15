@@ -4,7 +4,7 @@
 
 - [X] blog 1. 환경설정
 - [X] blog 2. JPA Entity 생성
-- [ ] blog 3. Entity 연관관계 설정 및 더미데이터 생성
+- [X] blog 3. Entity 연관관계 설정 및 더미데이터 생성
 - [ ] blog 4. Logback 설정
 - [ ] blog 5. dto entity 맵핑 1
 - [ ] blog 6. dto entity 맵핑 2
@@ -73,3 +73,11 @@ front: react + typescript + zustand
 
 - Post, Member, BaseEntity 추가 및 JPA 설정
 - SpringBoot 3 버전에서 Release된 spring-boot-docker-compose 적용
+
+## blog 3. Entity 연관관계 설정 및 더미데이터 생성
+
+- 더미데이터 생성을 위해 kotlin-faker 라이브러리 추가
+- MariaDB Docker Compose 스크립트 오류 수정
+- Member MVC 추가
+- Post, Comment Entity 추가
+- Member Entity 오류 수정
