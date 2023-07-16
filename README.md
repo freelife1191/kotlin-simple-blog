@@ -7,7 +7,7 @@
 - [X] blog 3. Entity 연관관계 설정 및 더미데이터 생성
 - [X] blog 4. Logback 설정
 - [X] blog 5. dto entity 맵핑 1
-- [ ] blog 6. dto entity 맵핑 2
+- [X] blog 6. dto entity 맵핑 2
 - [ ] blog 7. kotlin-jdsl 살펴보기 + pagenation
 - [ ] blog 8. dto validation
 - [ ] blog 9. Custom Exception Handling
@@ -75,7 +75,6 @@ front: react + typescript + zustand
 - SpringBoot 3 버전에서 Release된 spring-boot-docker-compose 적용
 
 ## blog 3. Entity 연관관계 설정 및 더미데이터 생성
-
 - 더미데이터 생성을 위해 kotlin-faker 라이브러리 추가
 - MariaDB Docker Compose 스크립트 오류 수정
 - Member MVC 추가
@@ -83,7 +82,6 @@ front: react + typescript + zustand
 - Member Entity 오류 수정
 
 ## blog 4. Logback 설정
-
 - p6spy 라이브러리를 활용한 JPA 로그 포멧팅 출력
 - Kotlin Logging 적용
 - Logback 설정적용
@@ -92,3 +90,11 @@ front: react + typescript + zustand
 - Logback 설정 수정 및 FILE 설정 추가
 - MemberDto 추가 및 InitData 로직 수정
 
+## blog 6. dto entity 맵핑 2
+- Member fake 데이터 생성 로직 수정
+- Post fake 데이터 생성 로직 추가
+- Member 전체 조회 기능 완료
+- Post 전체 조회 기능 완료
+- Gradle디펜던시 추가
+  - `com.fasterxml.jackson.datatype:jackson-datatype-hibernate5`
+  - `com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starte`

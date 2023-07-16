@@ -48,6 +48,12 @@ dependencies {
     // testImplementation("org.springframework.security:spring-security-test")
     implementation(kotlin("stdlib-jdk8"))
 
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.datatype/jackson-datatype-hibernate5
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate5:2.15.2")
+    // https://mvnrepository.com/artifact/com.linecorp.kotlin-jdsl/spring-data-kotlin-jdsl-starter
+    implementation("com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter:2.2.1.RELEASE")
+
+
     // https://github.com/serpro69/kotlin-faker
     // 더미 데이터 생성
     implementation("io.github.serpro69:kotlin-faker:1.14.0")

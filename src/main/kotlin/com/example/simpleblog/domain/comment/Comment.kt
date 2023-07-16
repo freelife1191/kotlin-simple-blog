@@ -8,7 +8,7 @@ import jakarta.persistence.*
  * Created by mskwon on 2023/07/03.
  */
 @Entity
-@Table(name = "Comment")
+@Table(name = "comment")
 class Comment (
     @Column(name = "content", nullable = false)
     var content: String,
