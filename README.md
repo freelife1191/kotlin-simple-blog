@@ -5,7 +5,7 @@
 - [X] blog 1. 환경설정
 - [X] blog 2. JPA Entity 생성
 - [X] blog 3. Entity 연관관계 설정 및 더미데이터 생성
-- [ ] blog 4. Logback 설정
+- [X] blog 4. Logback 설정
 - [ ] blog 5. dto entity 맵핑 1
 - [ ] blog 6. dto entity 맵핑 2
 - [ ] blog 7. kotlin-jdsl 살펴보기 + pagenation
@@ -81,3 +81,9 @@ front: react + typescript + zustand
 - Member MVC 추가
 - Post, Comment Entity 추가
 - Member Entity 오류 수정
+
+## blog 4. Logback 설정
+
+- p6spy 라이브러리를 활용한 JPA 로그 포멧팅 출력
+- Kotlin Logging 적용
+- Logback 설정적용

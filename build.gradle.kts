@@ -51,6 +51,10 @@ dependencies {
     // https://github.com/serpro69/kotlin-faker
     // 더미 데이터 생성
     implementation("io.github.serpro69:kotlin-faker:1.14.0")
+    // JPA 로그 포멧팅 출력
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+    // Kotlin Logging
+    implementation("io.github.microutils:kotlin-logging:3.0.5")
 
 }
 

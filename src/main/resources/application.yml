@@ -6,6 +6,10 @@ server:
       charset: UTF-8
       enabled: true
 spring:
+  output:
+    ansi:
+      #https://stackoverflow.com/questions/27843562/how-to-configure-logback-in-spring-boot-for-ansi-color-feature:
+      enabled: always
   # https://tpbabparn.medium.com/spring-boot-3-1-integrated-docker-compose-on-development-environment-spring-webflux-example-1ddcbfe052f
   # https://levelup.gitconnected.com/spring-boot-3-1-comes-with-docker-compose-support-676fd8885db0
   docker:
@@ -48,4 +52,9 @@ spring:
       hibernate:
         default_batch_fetch_size: 1000
         globally_quoted_identifiers: true # 테이블 네임을 quoted 문자로 감싸서 네이밍 충돌이 일어나지 않게 방지
-        format_sql: true
+        #format_sql: true
+# p6spy JPA Query Log Format
+decorator:
+  datasource:
+    p6spy:
+      enable-logging: true

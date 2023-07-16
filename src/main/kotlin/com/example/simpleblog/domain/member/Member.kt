@@ -17,7 +17,13 @@ class Member (
 
     @Enumerated(EnumType.STRING)
     var role: Role
-): BaseEntity()
+
+
+): BaseEntity() {
+    override fun toString(): String {
+        return "Member(email='$email', password='$password', role=$role)"
+    }
+}
 
 enum class Role {
     USER, ADMIN
