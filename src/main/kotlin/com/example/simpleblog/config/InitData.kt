@@ -1,8 +1,6 @@
 package com.example.simpleblog.config
 
-import com.example.simpleblog.domain.member.Member
-import com.example.simpleblog.domain.member.MemberRepository
-import com.example.simpleblog.domain.member.Role
+import com.example.simpleblog.domain.member.*
 import io.github.serpro69.kfaker.faker
 import mu.KotlinLogging
 import org.springframework.boot.context.event.ApplicationReadyEvent
@@ -22,12 +20,18 @@ class InitData(
 
     @EventListener(ApplicationReadyEvent::class)
     private fun init() {
-        val member = Member(
+        val members = mutableListOf<Member>()
+        for (i in 1 .. 100) {
+            val member = generateMember()
+            log.info { "insert $member" }
+            members.add(member)
+        }
+        memberRepository.saveAll(members)
+    }
+
+    private fun generateMember(): Member = MemberSaveReq(
                 email = faker.internet.safeEmail(),
                 password = "1234",
                 role = Role.USER
-        )
-        log.info { "insert $member" }
-        memberRepository.save(member)
-    }
+        ).toEntity()
 }

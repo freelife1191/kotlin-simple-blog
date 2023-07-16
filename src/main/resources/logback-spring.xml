@@ -1,8 +1,11 @@
 <!-- https://docs.spring.io/spring-boot/docs/current/reference/htmlsingle/#howto.logging.logback -->
 <!-- https://logback.qos.ch/manual/configuration.html -->
-<configuration>
-    <!-- org.springframework.boot.logging.logback.defaults.xml -->
+<!-- 1분마다 적용 -->
+<configuration scan="true" scanPeriod="60 seconds">
+    <!-- org.springframework.boot.logging.logback -->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <property name="LOG_PATH" value="logs"/>
+    <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logback.log}"/>
     <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <!-- encoders are assigned the type
@@ -15,7 +18,11 @@
             <charset>${CONSOLE_LOG_CHARSET}</charset>
         </encoder>
     </appender>
-    <root level="INFO">
+
+    <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
+
+    <root level="DEBUG">
         <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE" />
     </root>
 </configuration>
