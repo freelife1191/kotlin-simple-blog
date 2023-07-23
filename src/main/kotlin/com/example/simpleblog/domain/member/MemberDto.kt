@@ -22,8 +22,10 @@ fun MemberSaveReq.toEntity(): Member {
 }
 
 data class MemberRes(
-    val id: Long,
-    val email: String,
-    val password: String,
-    val role: Role
-)
+    val id: Long?,
+    val email: String?,
+    val password: String?,
+    val role: Role?
+) {
+    constructor() : this(null, null, null, null)
+}
