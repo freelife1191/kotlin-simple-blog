@@ -4,6 +4,8 @@ import com.example.simpleblog.domain.BaseEntity
 import com.example.simpleblog.domain.member.Member
 import com.example.simpleblog.domain.member.toDto
 import jakarta.persistence.*
+import org.hibernate.annotations.Cascade
+import org.hibernate.annotations.CascadeType
 
 /**
  * Created by mskwon on 2023/07/02.

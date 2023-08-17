@@ -1,8 +1,6 @@
 package com.example.simpleblog.service
 
-import com.example.simpleblog.domain.member.MemberRepository
-import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.toDto
+import com.example.simpleblog.domain.member.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.stereotype.Service
@@ -18,4 +16,19 @@ class MemberService(
     @Transactional(readOnly = true)
     fun findMembers(pageable: Pageable): Page<MemberRes> =
         memberRepository.findMembers(pageable).map { it.toDto() }
+
+    @Transactional
+    fun saveMember(dto: MemberSaveReq): MemberRes {
+        return memberRepository.save(dto.toEntity()).toDto()
+    }
+
+    @Transactional
+    fun deleteMember(id: Long) {
+        return memberRepository.deleteById(id)
+    }
+
+    @Transactional(readOnly = true)
+    fun findMemberById(id: Long): MemberRes {
+        return memberRepository.findById(id).orElseThrow().toDto();
+    }
 }

@@ -36,7 +36,7 @@ services:
       ## DB 서버는 서버 시간과 동기화 설정시 KST 설정이 되므로 제외시킴
       #- /etc/timezone:/etc/timezone:ro
       #- /etc/localtime:/etc/localtime:ro
-      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/data:/var/lib/mysql --user 1000
       - ./mariadb/conf.d:/etc/mysql/conf.d
       - ./mariadb/initdb.d:/docker-entrypoint-initdb.d
     # env 파일 설정 패스워드나 민감 정보는 env 파일에 설정

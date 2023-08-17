@@ -9,7 +9,7 @@
 - [X] blog 5. dto entity 맵핑 1
 - [X] blog 6. dto entity 맵핑 2
 - [X] blog 7. kotlin-jdsl 살펴보기 + pagenation
-- [ ] blog 8. dto validation
+- [X] blog 8. dto validation
 - [ ] blog 9. Custom Exception Handling
 - [ ] blog 10. AOP Logging Aspect, Fetch Join
 - [ ] blog 11. Filter를 통한 인증처리
@@ -99,7 +99,7 @@ front: react + typescript + zustand
   - `com.fasterxml.jackson.datatype:jackson-datatype-hibernate5`
   - `com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starte`
 
-## kotlin-jdsl 살펴보기 + pagenation
+## blog 7. kotlin-jdsl 살펴보기 + pagenation
 - 디펜던시 추가(유튜브에서 안내하는건 최신버전에서 동작하지 않으므로 디버깅후 모듈 교체)
   - `com.linecorp.kotlin-jdsl:spring-data-kotlin-jdsl-starter-jakarta`
   - Kotlin Jackson 라이브러리 추가
@@ -118,3 +118,7 @@ front: react + typescript + zustand
 - Member, Post 서비스 페이징 처리 추가
 - Member, Post 테스트 코드 추가
 - 유튜브에서 안내하는 라이브러리가 스프링부트 최신버전에서 동작하지 않아 원활한 테스트를 위해 테스트 코드를 추가하고 디버깅 후 라이브러리를 교체하거나 추가함
+
+## blog 8. dto validation
+- Docker Desktop 유료화로 Rancher Desktop으로 바꾸면서 docker-compose.yml 스크립트에서 오류가 발생하여 수정
+- Member, Post 에 `findById`, `deleteById`, `save` API 및 테스트코드 추가

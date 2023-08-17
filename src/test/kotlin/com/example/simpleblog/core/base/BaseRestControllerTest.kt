@@ -33,8 +33,6 @@ import kotlin.reflect.KClass
 // @ExtendWith(RestDocumentationExtension::class)
 @IntegrationTest
 class BaseRestControllerTest {
-    lateinit var mapper: ObjectMapper
-
     lateinit var mockMvc: MockMvc
 
     @BeforeEach
@@ -58,7 +56,7 @@ class BaseRestControllerTest {
     }
 
     fun MockHttpServletRequestDsl.jsonContent(value: Any) {
-        content = mapper.writeValueAsString(value)
+        content = JsonUtils.toMapperJson(value)
         contentType = MediaType.APPLICATION_JSON
     }
 
