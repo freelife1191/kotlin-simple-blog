@@ -35,5 +35,5 @@ class PostController (
 
     @PostMapping("/post")
     fun save(@RequestBody @Valid dto: PostSaveReq): CommonResDto<PostRes> =
-        CommonResDto(OK, "save member", postService.savePost(dto))
+        CommonResDto(OK, "save post", postService.savePost(dto))
 }

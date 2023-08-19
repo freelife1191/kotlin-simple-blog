@@ -10,7 +10,7 @@
 - [X] blog 6. dto entity 맵핑 2
 - [X] blog 7. kotlin-jdsl 살펴보기 + pagenation
 - [X] blog 8. dto validation
-- [ ] blog 9. Custom Exception Handling
+- [X] blog 9. Custom Exception Handling
 - [ ] blog 10. AOP Logging Aspect, Fetch Join
 - [ ] blog 11. Filter를 통한 인증처리
 - [ ] blog 12. 계획
@@ -122,3 +122,8 @@ front: react + typescript + zustand
 ## blog 8. dto validation
 - Docker Desktop 유료화로 Rancher Desktop으로 바꾸면서 docker-compose.yml 스크립트에서 오류가 발생하여 수정
 - Member, Post 에 `findById`, `deleteById`, `save` API 및 테스트코드 추가
+
+## blog 9. Custom Exception Handling
+- PostSaveDto Validation 적용
+- CustomExcetpinHandler 추가
+- Validation Error 테스트 코드 추가

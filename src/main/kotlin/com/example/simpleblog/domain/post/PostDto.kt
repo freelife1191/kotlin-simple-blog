@@ -8,19 +8,19 @@ import jakarta.validation.constraints.NotNull
  * Created b""y mskwon on ""2023/07/16.
  */
 data class PostSaveReq(
-    @field:NotNull
-    val title: String,
-    @field:NotNull
-    val content: String,
-    @field:NotNull
-    val memberId: Long
+    @field:NotNull(message = "require title")
+    val title: String?,
+    @field:NotNull(message = "require content")
+    val content: String?,
+    @field:NotNull(message = "require memberId")
+    val memberId: Long?
 )
 
 fun PostSaveReq.toEntity(): Post {
     return Post(
-            title = this.title,
-            content = this.content,
-            member = Member.createFakeMember(this.memberId)
+            title = this.title ?: "",
+            content = this.content ?: "",
+            member = Member.createFakeMember(this.memberId!!)
 
     )
 }
