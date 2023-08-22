@@ -1,5 +1,9 @@
 package com.example.simpleblog.config
 
+import com.example.simpleblog.domain.comment.Comment
+import com.example.simpleblog.domain.comment.CommentRepository
+import com.example.simpleblog.domain.comment.CommentSaveReq
+import com.example.simpleblog.domain.comment.toEntity
 import com.example.simpleblog.domain.member.*
 import com.example.simpleblog.domain.post.Post
 import com.example.simpleblog.domain.post.PostRepository
@@ -25,8 +29,8 @@ class InitData(
 
     @EventListener(ApplicationReadyEvent::class)
     private fun init() {
-        memberRepository.saveAll(generateMembers(100))
-        postRepository.saveAll(generatePosts(100))
+        // memberRepository.saveAll(generateMembers(10))
+        // postRepository.saveAll(generatePosts(10))
     }
 
     private fun generateMembers(cnt: Int): MutableList<Member> {
@@ -42,9 +46,11 @@ class InitData(
     private fun generatePosts(cnt: Int): MutableList<Post> {
         val posts = mutableListOf<Post>()
         for (i in 1 .. cnt) {
-            val post = generatePost()
-            log.info { "insert $post" }
-            posts.add(post)
+            for (j in 1..cnt) {
+                val post = generatePost(i)
+                log.info { "insert $post" }
+                posts.add(post)
+            }
         }
         return posts
     }
@@ -55,9 +61,9 @@ class InitData(
             role = Role.USER
     ).toEntity()
 
-    private fun generatePost(): Post = PostSaveReq(
+    private fun generatePost(memberId: Int): Post = PostSaveReq(
             title = faker.theExpanse.ships(),
             content = faker.quote.matz(),
-            memberId = 1
+            memberId = memberId.toLong()
     ).toEntity()
 }

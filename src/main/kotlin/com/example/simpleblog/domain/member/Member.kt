@@ -21,7 +21,7 @@ class Member (
 
 ): BaseEntity() {
     override fun toString(): String {
-        return "Member(email='$email', password='$password', role=$role)"
+        return "Member(id=$id, email='$email', password='$password', role=$role)"
     }
 
     companion object {

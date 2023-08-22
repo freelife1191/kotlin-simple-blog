@@ -2,7 +2,10 @@ package com.example.simpleblog.domain.comment
 
 import com.example.simpleblog.domain.BaseEntity
 import com.example.simpleblog.domain.member.Member
+import com.example.simpleblog.domain.member.toDto
 import com.example.simpleblog.domain.post.Post
+import com.example.simpleblog.domain.post.PostRes
+import com.example.simpleblog.domain.post.toDto
 import jakarta.persistence.*
 import lombok.AccessLevel
 import lombok.Setter
@@ -26,6 +29,15 @@ class Comment (
     var member: Member
 ): BaseEntity() {
     override fun toString(): String {
-        return "Comment(content='$content', post=$post, member=$member)"
+        return "Comment(id=$id, content='$content', post=$post, member=$member)"
     }
+}
+
+fun Comment.toDto(): CommentRes {
+    return CommentRes(
+        id = this.id!!,
+        post = this.post.toDto(),
+        content = this.content,
+        member = this.member.toDto()
+    )
 }

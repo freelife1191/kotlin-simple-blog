@@ -6,10 +6,10 @@ server:
       charset: UTF-8
       enabled: true
 spring:
-  output:
-    ansi:
+  #output:
+  #  ansi:
       #https://stackoverflow.com/questions/27843562/how-to-configure-logback-in-spring-boot-for-ansi-color-feature:
-      enabled: always
+  #    enabled: always
   # https://tpbabparn.medium.com/spring-boot-3-1-integrated-docker-compose-on-development-environment-spring-webflux-example-1ddcbfe052f
   # https://levelup.gitconnected.com/spring-boot-3-1-comes-with-docker-compose-support-676fd8885db0
   docker:
@@ -22,11 +22,12 @@ spring:
 #      schema-locations: classpath:schema.sql
 #      mode: always
   datasource:
+    #driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     url: jdbc:mariadb://localhost:3306/kotlinblog?serverTimezone=Asia/Seoul&useSSL=false&allowPublicKeyRetrieval=true&useUnicode=true&characterEncoding=utf8
     username: test
     password: 1111
     ## h2 DB
-#    url: jdbc:h2:mem:testdb;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
+  #    url: jdbc:h2:mem:testdb;DATABASE_TO_LOWER=TRUE;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE;MODE=MYSQL
 #    driver-class-name: org.h2.Driver
 #    username: sa
 #    password:
@@ -37,24 +38,26 @@ spring:
 #        ## h2 console ??
 #        enabled: true
   jpa:
-#    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
-#    database-platform: org.hibernate.dialect.MySQL8Dialect
-    database-platform: org.hibernate.dialect.MariaDBDialect
+    #database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    #database-platform: org.hibernate.dialect.MySQL8Dialect
+    #database-platform: org.hibernate.dialect.MariaDBDialect
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: update
       naming:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
     # https://gracelove91.tistory.com/100
     # false일 경우 트랜잭션을 종료할 때 영속성 컨텍스트 또한 닫힌다
     open-in-view: false # 세션 default true이지만 false로 처리
-    show-sql: true
     properties:
       hibernate:
         default_batch_fetch_size: 1000
         globally_quoted_identifiers: true # 테이블 네임을 quoted 문자로 감싸서 네이밍 충돌이 일어나지 않게 방지
         #format_sql: true
+    show-sql: true
 # p6spy JPA Query Log Format
 decorator:
   datasource:
     p6spy:
       enable-logging: true
+      #multiline: true
+      #logging: slf4j

@@ -24,7 +24,7 @@ class Post (
 
 ): BaseEntity() {
     override fun toString(): String {
-        return "Post(title='$title', content='$content', member=$member)"
+        return "Post(id=$id, title='$title', content='$content', member=$member)"
     }
 }
 

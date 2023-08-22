@@ -11,7 +11,7 @@
 - [X] blog 7. kotlin-jdsl 살펴보기 + pagenation
 - [X] blog 8. dto validation
 - [X] blog 9. Custom Exception Handling
-- [ ] blog 10. AOP Logging Aspect, Fetch Join
+- [X] blog 10. AOP Logging Aspect, Fetch Join
 - [ ] blog 11. Filter를 통한 인증처리
 - [ ] blog 12. 계획
 - [ ] blog 13. 스프링 시큐리티 적용 1
@@ -127,3 +127,8 @@ front: react + typescript + zustand
 - PostSaveDto Validation 적용
 - CustomExcetpinHandler 추가
 - Validation Error 테스트 코드 추가
+
+## blog 10. AOP Logging Aspect, Fetch Join
+- 전통적인 방식의 프록시 기반 스프링 AOP 적용
+- Post 조회시 Member Lazy 조회로 두번 조회가 되는 부분 fetch 적용으로 한번에 가져오도록 수정
+- initData 등록시 MemberId별 Post데이터가 등록되도록 수정

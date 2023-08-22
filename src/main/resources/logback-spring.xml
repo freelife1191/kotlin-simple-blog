@@ -4,6 +4,7 @@
 <configuration scan="true" scanPeriod="60 seconds">
     <!-- org.springframework.boot.logging.logback -->
     <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+<!--<property name="CONSOLE_LOG_PATTERN" value="%clr(%d{${LOG_DATEFORMAT_PATTERN:-yyyy-MM-dd'T'HH:mm:ss.SSSXXX}}){faint} %clr(${LOG_LEVEL_PATTERN:-%5p}) %clr(${PID:- }){magenta} %clr(-&#45;&#45;){faint} %clr([%15.15t]){faint} %clr(%logger){cyan} %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}"/>-->
     <property name="LOG_PATH" value="logs"/>
     <property name="LOG_FILE" value="${LOG_FILE:-${LOG_PATH:-${LOG_TEMP:-${java.io.tmpdir:-/tmp}}}/logback.log}"/>
     <!--<include resource="org/springframework/boot/logging/logback/console-appender.xml" />-->
@@ -11,7 +12,7 @@
         <!-- encoders are assigned the type
              ch.qos.logback.classic.encoder.PatternLayoutEncoder by default -->
         <!--https://stackoverflow.com/questions/27843562/how-to-configure-logback-in-spring-boot-for-ansi-color-feature-->
-        <withJansi>true</withJansi>
+        <!--<withJansi>true</withJansi>-->
         <encoder>
             <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>-->
             <pattern>${CONSOLE_LOG_PATTERN}</pattern>
@@ -21,7 +22,12 @@
 
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
-    <root level="DEBUG">
+    <springProfile name="!prod">
+        <logger name="com.example.simpleblog" level="DEBUG"/>
+    </springProfile>
+    <logger name="p6spy" level="INFO"/>
+
+    <root level="INFO">
         <appender-ref ref="STDOUT" />
         <!--<appender-ref ref="FILE" />-->
     </root>
