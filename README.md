@@ -132,3 +132,8 @@ front: react + typescript + zustand
 - 전통적인 방식의 프록시 기반 스프링 AOP 적용
 - Post 조회시 Member Lazy 조회로 두번 조회가 되는 부분 fetch 적용으로 한번에 가져오도록 수정
 - initData 등록시 MemberId별 Post데이터가 등록되도록 수정
+
+## blog 11. Filter를 통한 인증처리
+- Filter와 HttpSession을 활용해 특정 API Path 인증 처리하기를 간단하게 구현
+- 스프링시큐리티라는 필터와 인터셉터를 이용해서 만든 강력한 인증처리 관련 프레임워크가 있음
+- SpringBoot 3.1.1 -> 3.2.1, Kotlin 1.8.22 -> 1.9.22 외 Dependency Minor Version Update

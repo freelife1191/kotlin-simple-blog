@@ -1,10 +1,10 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    val kotlinVersion = "1.8.22"
-    id("org.springframework.boot") version "3.1.1"
-    id("io.spring.dependency-management") version "1.1.0"
-    id("org.asciidoctor.jvm.convert") version "3.3.2"
+    val kotlinVersion = "1.9.22"
+    id("org.springframework.boot") version "3.2.1"
+    id("io.spring.dependency-management") version "1.1.4"
+    id("org.asciidoctor.jvm.convert") version "4.0.1"
     kotlin("jvm") version kotlinVersion
     kotlin("plugin.spring") version kotlinVersion
     kotlin("plugin.jpa") version kotlinVersion
@@ -36,9 +36,9 @@ repositories {
 }
 
 val snippetsDir by extra { file("build/generated-snippets") }
-val koTestVersion by extra { "5.5.5" }
-val kotestExtVersion by extra { "1.1.2" }
-extra["springCloudVersion"] = "2022.0.3"
+val koTestVersion by extra { "5.8.0" }
+val kotestExtVersion by extra { "1.1.3" }
+extra["springCloudVersion"] = "2023.0.0"
 
 dependencyManagement {
     imports {
@@ -90,20 +90,20 @@ dependencies {
 
     // https://github.com/serpro69/kotlin-faker
     // 더미 데이터 생성
-    implementation("io.github.serpro69:kotlin-faker:1.14.0")
+    implementation("io.github.serpro69:kotlin-faker:1.15.0")
     // JPA 로그 포멧팅 출력
-    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.0")
+    implementation("com.github.gavlyukovskiy:p6spy-spring-boot-starter:1.9.1")
     // Kotlin Logging
     implementation("io.github.microutils:kotlin-logging:3.0.5")
 
     // apache
-    implementation("org.apache.commons:commons-lang3:3.12.0")
+    implementation("org.apache.commons:commons-lang3:3.14.0")
 }
 
 tasks.withType<KotlinCompile> {
     kotlinOptions {
         freeCompilerArgs = listOf("-Xjsr305=strict")
-        jvmTarget = "17"
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 

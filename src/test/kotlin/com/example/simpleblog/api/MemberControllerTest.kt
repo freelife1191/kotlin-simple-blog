@@ -23,7 +23,7 @@ class MemberControllerTest : BaseRestControllerTest() {
 
     @Test
     fun findAll() {
-        val result = mockMvc.get("/members") {
+        val result = mockMvc.get("/api/members") {
             param("page","0")
             param("size", "10")
         }
@@ -43,7 +43,7 @@ class MemberControllerTest : BaseRestControllerTest() {
 
     @Test
     fun findById() {
-        val result = mockMvc.get("/member/{id}",1) {}
+        val result = mockMvc.get("/api/member/{id}",1) {}
             .andExpect {
                 status { isOk() }
             }
@@ -58,7 +58,7 @@ class MemberControllerTest : BaseRestControllerTest() {
 
     @Test
     fun findByIdError() {
-        mockMvc.get("/member/{id}",1000) {}
+        mockMvc.get("/api/member/{id}",1000) {}
             .andExpect {
                 status { is5xxServerError() }
             }
@@ -71,7 +71,7 @@ class MemberControllerTest : BaseRestControllerTest() {
     @Test
     @Transactional
     fun deleteById() {
-        val result = mockMvc.delete("/member/{id}",1) {}
+        val result = mockMvc.delete("/api/member/{id}",1) {}
             .andExpect {
                 status { isOk() }
             }
@@ -86,7 +86,7 @@ class MemberControllerTest : BaseRestControllerTest() {
 
     @Test
     fun save() {
-        val result = mockMvc.post("/member") {
+        val result = mockMvc.post("/api/member") {
             jsonContent(
                 MemberSaveReq(
                     email = "aaa@aaa.com",
@@ -108,7 +108,7 @@ class MemberControllerTest : BaseRestControllerTest() {
 
     @Test
     fun saveError() {
-        mockMvc.post("/member") {
+        mockMvc.post("/api/member") {
             jsonContent(
                 MemberSaveReq(
                     email = null,

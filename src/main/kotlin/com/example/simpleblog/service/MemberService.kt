@@ -15,7 +15,7 @@ class MemberService(
     private val memberRepository: MemberRepository
 ) {
     @Transactional(readOnly = true)
-    fun findMembers(pageable: Pageable): Page<MemberRes> =
+    fun findAll(pageable: Pageable): Page<MemberRes> =
         memberRepository.findMembers(pageable).map { it.toDto() }
 
     @Transactional

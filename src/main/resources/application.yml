@@ -6,6 +6,8 @@ server:
       charset: UTF-8
       enabled: true
 spring:
+  main:
+    allow-bean-definition-overriding: true
   #output:
   #  ansi:
       #https://stackoverflow.com/questions/27843562/how-to-configure-logback-in-spring-boot-for-ansi-color-feature:
