@@ -9,14 +9,14 @@ import jakarta.validation.constraints.NotNull
  * 1. 각 dto, entity에 책임 할당
  * 2. entitymapper라는 것을 하나 만들어서 담당하도록 하는 스타일
  */
-data class MemberSaveReq(
+data class LoginDto(
     @field:NotNull(message = "require email")
     val email: String?,
     val password: String?,
     val role: Role?
 )
 
-fun MemberSaveReq.toEntity(): Member {
+fun LoginDto.toEntity(): Member {
     return Member(
         email = this.email ?: "",
         password = this.password ?: "",

@@ -1,7 +1,5 @@
 package com.example.simpleblog.api
 
-import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.MemberSaveReq
 import com.example.simpleblog.domain.post.PostRes
 import com.example.simpleblog.domain.post.PostSaveReq
 import com.example.simpleblog.service.PostService
@@ -10,7 +8,6 @@ import jakarta.validation.Valid
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.HttpStatus
 import org.springframework.http.HttpStatus.OK
 import org.springframework.web.bind.annotation.*
 

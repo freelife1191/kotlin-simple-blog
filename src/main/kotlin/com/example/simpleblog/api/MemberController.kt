@@ -1,7 +1,7 @@
 package com.example.simpleblog.api
 
 import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.MemberSaveReq
+import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.service.MemberService
 import com.example.simpleblog.util.value.CommonResDto
 import jakarta.servlet.http.HttpSession
@@ -47,6 +47,6 @@ class MemberController(
         CommonResDto(OK, "delete Member by id", memberService.deleteMember(id))
 
     @PostMapping("/member")
-    fun save(@RequestBody @Valid dto: MemberSaveReq): CommonResDto<MemberRes> =
+    fun save(@RequestBody @Valid dto: LoginDto): CommonResDto<MemberRes> =
         CommonResDto(OK, "save member", memberService.saveMember(dto))
 }

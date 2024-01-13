@@ -170,3 +170,10 @@ front: react + typescript + zustand
 ## blog 13. 스프링 시큐리티 적용 1
 - SpringSecurity 적용
 - JwtAuthenticationProvider 구현
+
+## blog 14. 스프링 시큐리티 적용 2 jwt 발급
+- email, password 인증 서비스 추가
+- 인증 성공시 JWT토큰 생성 및 응답 처리 추가
+- 참고
+  - https://jwt.io/
+  - https://twer.tistory.com/entry/Security-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%EC%9D%98-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EA%B5%AC%EC%A1%B0-%EB%B0%8F-%ED%9D%90%EB%A6%84

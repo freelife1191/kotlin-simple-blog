@@ -1,16 +1,14 @@
 package com.example.simpleblog.api
 
 import com.example.simpleblog.core.base.BaseRestControllerTest
-import com.example.simpleblog.domain.member.Member
 import com.example.simpleblog.domain.member.MemberRes
-import com.example.simpleblog.domain.member.MemberSaveReq
+import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.value.CommonResDto
 import com.fasterxml.jackson.core.type.TypeReference
 import org.junit.jupiter.api.Test
 import org.springframework.data.domain.Page
-import org.springframework.data.domain.PageImpl
 import org.springframework.test.web.servlet.delete
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
@@ -88,7 +86,7 @@ class MemberControllerTest : BaseRestControllerTest() {
     fun save() {
         val result = mockMvc.post("/api/member") {
             jsonContent(
-                MemberSaveReq(
+                LoginDto(
                     email = "aaa@aaa.com",
                     password = "1234",
                     role = Role.USER)
@@ -110,7 +108,7 @@ class MemberControllerTest : BaseRestControllerTest() {
     fun saveError() {
         mockMvc.post("/api/member") {
             jsonContent(
-                MemberSaveReq(
+                LoginDto(
                     email = null,
                     password = "1234",
                     role = Role.USER)

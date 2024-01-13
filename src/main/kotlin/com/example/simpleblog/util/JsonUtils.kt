@@ -11,6 +11,7 @@ import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.cloud.openfeign.support.PageJacksonModule
 import org.springframework.cloud.openfeign.support.SortJacksonModule
+import java.io.InputStream
 import kotlin.reflect.KClass
 
 /**
@@ -76,6 +77,15 @@ class JsonUtils {
         </T> */
         @Throws(JsonProcessingException::class)
         fun <T : Any> toMapperObject(obj: String, clz: KClass<T>): T = getObjectMapper().readValue(obj, clz.java)
+        /**
+         * To ObjectMapper Mapping json string
+         * @param inputStream InputStream
+         * @param clz KClass<T>
+         * @return T
+         * @throws JsonProcessingException
+         */
+        @Throws(JsonProcessingException::class)
+        fun <T : Any> toMapperObject(inputStream: InputStream?, clz: KClass<T>): T = getObjectMapper().readValue(inputStream, clz.java)
         /**
          * To ObjectMapper Mapping json string
          * @param obj JSON String

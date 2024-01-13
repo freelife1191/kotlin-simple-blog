@@ -19,7 +19,7 @@ class MemberService(
         memberRepository.findMembers(pageable).map { it.toDto() }
 
     @Transactional
-    fun saveMember(dto: MemberSaveReq): MemberRes {
+    fun saveMember(dto: LoginDto): MemberRes {
         return memberRepository.save(dto.toEntity()).toDto()
     }
 

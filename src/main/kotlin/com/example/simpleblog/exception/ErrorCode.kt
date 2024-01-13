@@ -11,5 +11,7 @@ enum class ErrorCode (
     val message: String
 ) {
     INVALID_INPUT_VALUE("C001", "Invalid input value"),
-    ENTITY_NOT_FOUND("C002", "Entity not found")
+    ENTITY_NOT_FOUND("C002", "Entity not found"),
+    MEMBER_NOT_FOUND("C003", "Member not found"),
+    NO_RESULT("C004", "No Result"),
 }

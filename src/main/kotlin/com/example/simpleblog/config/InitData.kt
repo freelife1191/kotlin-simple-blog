@@ -1,9 +1,5 @@
 package com.example.simpleblog.config
 
-import com.example.simpleblog.domain.comment.Comment
-import com.example.simpleblog.domain.comment.CommentRepository
-import com.example.simpleblog.domain.comment.CommentSaveReq
-import com.example.simpleblog.domain.comment.toEntity
 import com.example.simpleblog.domain.member.*
 import com.example.simpleblog.domain.post.Post
 import com.example.simpleblog.domain.post.PostRepository
@@ -55,7 +51,7 @@ class InitData(
         return posts
     }
 
-    private fun generateMember(): Member = MemberSaveReq(
+    private fun generateMember(): Member = LoginDto(
             email = faker.internet.safeEmail(),
             password = "1234",
             role = Role.USER

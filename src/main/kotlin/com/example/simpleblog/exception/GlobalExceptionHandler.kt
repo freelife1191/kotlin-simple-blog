@@ -1,5 +1,6 @@
 package com.example.simpleblog.exception
 
+import jakarta.persistence.NoResultException
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -23,9 +24,23 @@ class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(MemberNotFoundException::class)
+    fun handleMemberNotFoundException(e: MemberNotFoundException): ResponseEntity<ErrorResponse> {
+        log.error { "handleMemberNotFoundException $e" }
+        val of = ErrorResponse.of(ErrorCode.MEMBER_NOT_FOUND)
+        return ResponseEntity(of, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(EntityNotFoundException::class)
     fun handleEntityNotFoundException(e: EntityNotFoundException): ResponseEntity<ErrorResponse> {
-        log.error { "handleMethodArgumentNotValidException $e" }
+        log.error { "handleEntityNotFoundException $e" }
         val of = ErrorResponse.of(ErrorCode.ENTITY_NOT_FOUND)
-        return ResponseEntity(of, HttpStatus.INTERNAL_SERVER_ERROR)
+        return ResponseEntity(of, HttpStatus.NOT_FOUND)
+    }
+
+    @ExceptionHandler(NoResultException::class)
+    fun handleNoResultException(e: NoResultException): ResponseEntity<ErrorResponse> {
+        log.error { "handleMethodArgumentNotValidException $e" }
+        val of = ErrorResponse.of(ErrorCode.NO_RESULT)
+        return ResponseEntity(of, HttpStatus.NO_CONTENT)
     }
 }
