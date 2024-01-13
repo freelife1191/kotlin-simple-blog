@@ -31,10 +31,10 @@ class MemberController(
         /**
          * 인증처리를 하고 싶다
          */
-        val principal = session.getAttribute("principal")
-        if (principal == null) {
-            throw RuntimeException("session을 찾을 수 없다!!")
-        }
+        // val principal = session.getAttribute("principal")
+        // if (principal == null) {
+        //     throw RuntimeException("session을 찾을 수 없다!!")
+        // }
         return CommonResDto(OK, "find All Members", memberService.findAll(pageable))
     }
 

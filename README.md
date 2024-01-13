@@ -166,3 +166,7 @@ front: react + typescript + zustand
 - JPA의 N+1문제 ManyToOne의 경우 fetch Join으로 한번의 SQL요청으로 연관관계 데이터를 조회해옴
 - OneToMany의 케이스가 여러개인 케이스일 때는 서비스에서 Lazy로딩을 하는데 `default_batch_fetch_size`로 최적화가 필요
   - 이런 문제로 양방향은 추천하지 않고 단방향만 설계하는 것을 권장
+
+## blog 13. 스프링 시큐리티 적용 1
+- SpringSecurity 적용
+- JwtAuthenticationProvider 구현

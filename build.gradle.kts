@@ -51,7 +51,7 @@ dependencies {
     // implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     // implementation("org.springframework.boot:spring-boot-starter-data-redis")
-    // implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
@@ -65,8 +65,11 @@ dependencies {
     annotationProcessor("org.projectlombok:lombok")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     // testImplementation("org.springframework.restdocs:spring-restdocs-mockmvc")
-    // testImplementation("org.springframework.security:spring-security-test")
+    testImplementation("org.springframework.security:spring-security-test") {
+        exclude(group = "org.mockito")
+    }
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.auth0:java-jwt:4.4.0")
 
     // implementation("org.hibernate:hibernate-core:6.2.7.Final")
     // implementation("com.fasterxml.jackson.datatype:jackson-datatype-hibernate6:2.15.2")
