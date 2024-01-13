@@ -30,7 +30,7 @@ class PostCustomRepositoryImpl (
         val results = queryFactory.listQuery<Post> {
             select(entity(Post::class))
             from(entity(Post::class))
-            fetch(Post::member)
+            fetch(Post::member) // JPA의 N+1문제 ManyToOne의 경우 fetch Join으로 한번의 SQL요청으로 연관관계 데이터를 조회해옴
             limit(pageable.pageSize)
             offset(pageable.offset.toInt())
             orderBy(ExpressionOrderSpec(column(Post::id), false))

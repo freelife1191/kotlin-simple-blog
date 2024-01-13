@@ -137,3 +137,32 @@ front: react + typescript + zustand
 - Filter와 HttpSession을 활용해 특정 API Path 인증 처리하기를 간단하게 구현
 - 스프링시큐리티라는 필터와 인터셉터를 이용해서 만든 강력한 인증처리 관련 프레임워크가 있음
 - SpringBoot 3.1.1 -> 3.2.1, Kotlin 1.8.22 -> 1.9.22 외 Dependency Minor Version Update
+
+## blog 12. 계획
+- backend
+  1. 비동기 처리
+  2. 파일 핸들링
+  3. sse event + web socket을 활용한 실시간 챗봇
+  4. aws 배포
+  5. actuator + admin-server를 통한 간단한 모니터링
+  6. code deploy + github action을 통한 CI/CD
+  7. 스프링 시큐리티 + JWT 인증처리
+  8. Junit + Mockk 테스트 환경설정
+  9. restdoc 통한 API 문서 자동화
+  10. gradle 멀티모듈을 통해서, domain을 공유하는 Batch 서버 작성
+  11. 인메모리 concurrentHashmap을 통한 cache 적용
+  12. 계층형 테이블 전략
+  13. 스프링 클라우드 모듈들을 활용해서 간단하게 MSA 환경 구축
+  14. Docker 연동해서 배포
+- frontend
+  1. react - typescript 환경셋팅
+  2. recoil + zustand를 통한 상태관리
+  3. pm2를 활용한 배포, 모니터링
+  4. 정적 페이지 서버로서 s3에 배포
+  5. next.js?? (미정이긴 한데)를 활용해서 서버사이드랜더링 체험 + SEO
+  6. antd를 활용한 ui 컴포넌트 활용
+  7. 반응형 스타일링
+  8. webpack 최적화 + usecallback을 활용한 랜더링 최적화
+- JPA의 N+1문제 ManyToOne의 경우 fetch Join으로 한번의 SQL요청으로 연관관계 데이터를 조회해옴
+- OneToMany의 케이스가 여러개인 케이스일 때는 서비스에서 Lazy로딩을 하는데 `default_batch_fetch_size`로 최적화가 필요
+  - 이런 문제로 양방향은 추천하지 않고 단방향만 설계하는 것을 권장
