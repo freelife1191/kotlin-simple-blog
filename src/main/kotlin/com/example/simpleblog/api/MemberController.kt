@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController
  * Created by mskwon on 2023/07/03.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/v1")
 class MemberController(
         private val memberService: MemberService
 ) {
