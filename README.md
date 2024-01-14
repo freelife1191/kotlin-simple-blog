@@ -22,7 +22,7 @@
 - [X] blog 18. JWT Manager 수정
 - [X] blog 19. ObjectMapper config
 - [X] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보안
-- [ ] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
+- [X] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
 - [ ] blog 22. refreshToken Cookie로 감싸기
 - [ ] blog 23. JWT 예외처리
 - [ ] blog 24. accessToken 재발급
@@ -205,3 +205,7 @@ front: react + typescript + zustand
   - `@Secured(*["ROLE_ADMIN", "ROLE_USER"])`
   - `@PostAuthorize("hasRole('ADMIN') or hasRole('USER')")`
   - `@PreAuthorize("hasRole('ADMIN')")`
+
+## blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
+- SpringSecurity LogOutHandler 적용
+- Member 객체 Refactoring

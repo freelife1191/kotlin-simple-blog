@@ -14,7 +14,7 @@ import java.util.concurrent.TimeUnit
  * Created by mskwon on 2024/01/13.
  */
 class JwtAuthenticationProvider(
-    accessTokenExpireSecond: Long = 300
+    accessTokenExpireSecond: Long = 300 // 5분
 ) {
     private val log = KotlinLogging.logger {  }
 
@@ -23,6 +23,10 @@ class JwtAuthenticationProvider(
     val claimPrincipal = "principal"
     private val accessTokenExpireMinute: Long = accessTokenExpireSecond
     private val jwtSubject = "my-token"
+
+    fun generateRefreshToken(principal: String) {
+
+    }
 
     fun generateAccessToken(principal: String): String {
         val expireDate = Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(accessTokenExpireMinute))

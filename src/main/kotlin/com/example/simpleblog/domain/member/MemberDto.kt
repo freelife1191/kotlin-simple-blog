@@ -1,6 +1,7 @@
 package com.example.simpleblog.domain.member
 
 import jakarta.validation.constraints.NotNull
+import java.time.LocalDateTime
 
 /**
  * Created by mskwon on 2023/07/16.
@@ -26,10 +27,10 @@ fun LoginDto.toEntity(): Member {
 }
 
 data class MemberRes(
-    val id: Long?,
-    val email: String?,
-    val password: String?,
-    val role: Role?
-) {
-    constructor() : this(null, null, null, null)
-}
+    val id: Long,
+    val email: String,
+    val password: String,
+    val role: Role,
+    val createdAt: LocalDateTime,
+    val updatedAt: LocalDateTime
+)

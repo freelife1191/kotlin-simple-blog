@@ -12,8 +12,8 @@ import java.time.LocalDateTime
 @EntityListeners(value = [AuditingEntityListener::class])
 @MappedSuperclass
 abstract class BaseEntity (
-    @CreatedDate var createdAt: LocalDateTime? = null,
-    @LastModifiedDate var updatedAt: LocalDateTime? = null
+    @CreatedDate var createdAt: LocalDateTime = LocalDateTime.now(),
+    @LastModifiedDate var updatedAt: LocalDateTime = LocalDateTime.now()
 ): BaseEntityId()
 
 @EntityListeners(value = [AuditingEntityListener::class])

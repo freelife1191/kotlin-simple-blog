@@ -1,8 +1,12 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.Role
+import com.example.simpleblog.util.JsonUtils
+import com.example.simpleblog.util.func.responseData
+import com.example.simpleblog.util.value.CommonResDto
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
+import lombok.CustomLog
 import mu.KotlinLogging
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
@@ -20,6 +24,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
@@ -27,6 +32,7 @@ import org.springframework.security.web.access.AccessDeniedHandler
 import org.springframework.security.web.authentication.AuthenticationFailureHandler
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import org.springframework.security.web.authentication.logout.LogoutSuccessHandler
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.CorsConfigurationSource
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource
@@ -73,10 +79,29 @@ class SecurityConfig(
                 it.requestMatchers("/v1/posts").hasAnyRole(Role.USER.name, Role.ADMIN.name)
                     .anyRequest().permitAll()
                 // it.requestMatchers("/**").authenticated()
-
             }
-
+            .logout { it.logoutUrl("/logout").logoutSuccessHandler(CustomLogoutSuccessHandler()) }
         return http.build()
+    }
+
+    class CustomLogoutSuccessHandler : LogoutSuccessHandler {
+
+        private val log = KotlinLogging.logger { }
+
+        override fun onLogoutSuccess(
+            request: HttpServletRequest?,
+            response: HttpServletResponse?,
+            authentication: Authentication?
+        ) {
+            log.info { "logout success" }
+            val context = SecurityContextHolder.getContext()
+            context.authentication = null
+            SecurityContextHolder.clearContext()
+
+            val commonResDto = CommonResDto(HttpStatus.OK, "logout success", null)
+            responseData(response, JsonUtils.toMapperJson(commonResDto))
+        }
+
     }
 
     class CustomAuthenticationEntryPoint: AuthenticationEntryPoint {

@@ -31,7 +31,7 @@ class CustomUserNameAuthenticationFilter(
             loginDto = JsonUtils.toMapperObject(request?.inputStream, LoginDto::class)
             log.info { "login Dto : $loginDto" }
         } catch (e: Exception) {
-            log.error { "loginFilter: 로그인 요청 Dto 생성 중 실패! $e" }
+            log.error { "loginFilter: 로그인 요청 Dto 생성 중 실패! ${e.stackTraceToString()}" }
         }
         val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
         return this.authenticationManager.authenticate(authenticationToken)

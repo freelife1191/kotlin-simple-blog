@@ -2,15 +2,11 @@ package com.example.simpleblog.domain.comment
 
 import com.example.simpleblog.domain.BaseEntity
 import com.example.simpleblog.domain.member.Member
-import com.example.simpleblog.domain.member.toDto
 import com.example.simpleblog.domain.post.Post
-import com.example.simpleblog.domain.post.PostRes
 import com.example.simpleblog.domain.post.toDto
 import jakarta.persistence.*
 import lombok.AccessLevel
 import lombok.Setter
-import org.hibernate.annotations.Cascade
-import org.hibernate.annotations.CascadeType
 
 /**
  * Created by mskwon on 2023/07/03.

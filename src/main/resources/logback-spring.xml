@@ -22,10 +22,12 @@
 
     <include resource="org/springframework/boot/logging/logback/file-appender.xml" />
 
-    <springProfile name="!prod">
-        <logger name="com.example.simpleblog" level="DEBUG"/>
-    </springProfile>
     <logger name="p6spy" level="INFO"/>
+    <springProfile name="!prod">
+        <logger name="com.example.simpleblog" level="DEBUG" additivity="false">
+            <appender-ref ref="STDOUT" />
+        </logger>
+    </springProfile>
 
     <root level="INFO">
         <appender-ref ref="STDOUT" />
