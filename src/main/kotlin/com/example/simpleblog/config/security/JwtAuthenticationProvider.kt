@@ -25,7 +25,7 @@ class JwtAuthenticationProvider(
     private val jwtSubject = "my-token"
 
     fun generateAccessToken(principal: String): String {
-        val expireDate = Date(System.nanoTime() + TimeUnit.MINUTES.toMillis(accessTokenExpireMinute))
+        val expireDate = Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(accessTokenExpireMinute))
         log.info { "accessToken ExpireDate=>$expireDate" }
         return JWT.create()
             .withSubject(jwtSubject)
@@ -38,6 +38,9 @@ class JwtAuthenticationProvider(
         return JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token)
             .getClaim(claimEmail).asString()
     }
+
+    fun getPrincipalStringByAccessToken(accessToken: String): String? =
+        validatedJwt(accessToken).getClaim(claimPrincipal).asString()
 
     fun validatedJwt(accessToken: String): DecodedJWT {
         try {

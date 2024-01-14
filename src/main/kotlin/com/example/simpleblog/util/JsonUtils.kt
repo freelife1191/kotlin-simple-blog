@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.MapperFeature
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.databind.SerializationFeature
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule
+import com.fasterxml.jackson.module.kotlin.KotlinFeature
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
 import org.springframework.cloud.openfeign.support.PageJacksonModule
@@ -30,6 +32,13 @@ class JsonUtils {
                 PageJacksonModule(),
                 SortJacksonModule(),
                 JavaTimeModule(),
+                KotlinModule.Builder()
+                    .disable(KotlinFeature.StrictNullChecks)
+                    .disable(KotlinFeature.NullIsSameAsDefault)
+                    .disable(KotlinFeature.NullToEmptyMap)
+                    .disable(KotlinFeature.NullToEmptyCollection)
+                    .disable(KotlinFeature.SingletonSupport)
+                    .build()
             )
             .registerKotlinModule()
             .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS)

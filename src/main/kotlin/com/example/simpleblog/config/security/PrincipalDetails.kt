@@ -1,10 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.Member
-import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.fasterxml.jackson.annotation.JsonInclude
-import com.fasterxml.jackson.annotation.JsonProperty
 import mu.KotlinLogging
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails

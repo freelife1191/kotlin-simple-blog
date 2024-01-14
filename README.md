@@ -20,7 +20,7 @@
 - [X] blog 16. 스프링 시큐리티 적용 4 실패/성공 핸들링
 - [X] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
 - [X] blog 18. JWT Manager 수정
-- [ ] blog 19. ObjectMapper config
+- [X] blog 19. ObjectMapper config
 - [ ] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보운
 - [ ] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
 - [ ] blog 22. refreshToken Cookie로 감싸기
@@ -192,3 +192,9 @@ front: react + typescript + zustand
 - JwtAuthenticationProvider Refactoring
 - JWT 유효성 검증 로직 수정
 - Member Id 파라메터 추가
+
+## blog 19. ObjectMapper config
+- JWT 이미 발급된 토큰으로 인증시 DB Access 하지 않도록 개선(서버상의 Claim 으로만 인증)
+  - `getPrincipalStringByAccessToken`
+- JWT 토큰 ExpireDate 수정 nano -> millis
+- JsonUtils Kotlin Module 설정 추가

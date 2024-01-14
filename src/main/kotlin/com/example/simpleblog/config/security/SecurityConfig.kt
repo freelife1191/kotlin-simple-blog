@@ -42,7 +42,6 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @EnableWebSecurity(debug = false)
 class SecurityConfig(
     private val authenticationConfiguration: AuthenticationConfiguration,
-    private val memberRepository: MemberRepository
 ) {
 
     private val log = KotlinLogging.logger { }
@@ -130,7 +129,6 @@ class SecurityConfig(
     fun authenticationFilter(): CustomBasicAuthenticationFilter {
         return CustomBasicAuthenticationFilter(
             authenticationManager = authenticationManager(),
-            memberRepository = memberRepository
         )
     }
 

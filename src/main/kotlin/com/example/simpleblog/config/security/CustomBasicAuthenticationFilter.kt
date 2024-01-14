@@ -1,6 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.MemberRepository
+import com.example.simpleblog.util.JsonUtils
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
@@ -16,7 +17,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  * Created by mskwon on 2024/01/14.
  */
 class CustomBasicAuthenticationFilter(
-    private val memberRepository: MemberRepository,
     authenticationManager: AuthenticationManager
 ): BasicAuthenticationFilter(authenticationManager) {
 
@@ -34,10 +34,10 @@ class CustomBasicAuthenticationFilter(
             return
         }
         log.debug { "token: $token" }
-        val memberEmail = jwtAuthenticationProvider.getMemberEmail(token) ?: throw RuntimeException("memberEmail을 찾을 수 없습니다")
-
-        val member = memberRepository.findMemberByEmail(memberEmail)
-        val principalDetails = PrincipalDetails(member)
+        val principalJsonData = jwtAuthenticationProvider.getPrincipalStringByAccessToken(token) ?: throw RuntimeException("memberEmail을 찾을 수 없습니다")
+        val principalDetails = JsonUtils.toMapperObject(principalJsonData, PrincipalDetails::class)
+        // val member = memberRepository.findMemberByEmail(principalJsonData)
+        // val principalDetails = PrincipalDetails(member)
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
             principalDetails,
             principalDetails.password,
