@@ -46,7 +46,7 @@ class CustomUserNameAuthenticationFilter(
     ) {
         log.info { "로그인 완료되어서 JWT 토큰 만들어서 response" }
         val principalDetails = authResult?.principal as PrincipalDetails
-        val jwtToken = jwtAuthenticationProvider.generateAccessToken(principalDetails)
+        val jwtToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(principalDetails))
         response?.addHeader(AUTHORIZATION, "Bearer $jwtToken")
         responseData(response, JsonUtils.toMapperJson(CommonResDto(HttpStatus.OK, "login success", principalDetails.member)))
     }

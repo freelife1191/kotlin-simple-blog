@@ -1,32 +1,54 @@
 package com.example.simpleblog.config.security
 
 import com.auth0.jwt.JWT
+import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.interfaces.DecodedJWT
 import mu.KotlinLogging
 import java.util.*
+import java.util.concurrent.TimeUnit
+
 
 /**
  * Created by mskwon on 2024/01/13.
  */
-class JwtAuthenticationProvider {
+class JwtAuthenticationProvider(
+    accessTokenExpireSecond: Long = 300
+) {
     private val log = KotlinLogging.logger {  }
 
     private val secretKey: String = "simpleblog"
     private val claimEmail = "email"
-    private val claimPassword = "password"
-    private val expireTime = 1000 * 60 * 60
+    val claimPrincipal = "principal"
+    private val accessTokenExpireMinute: Long = accessTokenExpireSecond
+    private val jwtSubject = "my-token"
 
-    fun generateAccessToken(principal: PrincipalDetails): String {
+    fun generateAccessToken(principal: String): String {
+        val expireDate = Date(System.nanoTime() + TimeUnit.MINUTES.toMillis(accessTokenExpireMinute))
+        log.info { "accessToken ExpireDate=>$expireDate" }
         return JWT.create()
-            .withSubject(principal.username)
-            .withExpiresAt(Date(System.nanoTime() + expireTime))
-            .withClaim(claimEmail, principal.username)
-            .withClaim(claimPassword, principal.password)
+            .withSubject(jwtSubject)
+            .withExpiresAt(expireDate)
+            .withClaim(claimPrincipal, principal)
             .sign(Algorithm.HMAC512(secretKey))
     }
 
     fun getMemberEmail(token: String): String? {
         return JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token)
             .getClaim(claimEmail).asString()
+    }
+
+    fun validatedJwt(accessToken: String): DecodedJWT {
+        try {
+            val verifier: JWTVerifier = JWT.require(Algorithm.HMAC512(secretKey)) // specify an specific claim validations
+                // .withIssuer("auth0") // reusable verifier instance
+                .build()
+            return verifier.verify(accessToken)
+        } catch (e: JWTVerificationException) {
+            // Invalid signature/claims
+            log.error { "error=>${e.stackTraceToString()}" }
+            throw RuntimeException("Invalid jwt")
+        }
     }
 }

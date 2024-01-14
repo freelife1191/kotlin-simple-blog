@@ -1,6 +1,10 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.Member
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnore
+import com.fasterxml.jackson.annotation.JsonInclude
+import com.fasterxml.jackson.annotation.JsonProperty
 import mu.KotlinLogging
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.userdetails.UserDetails
@@ -9,15 +13,13 @@ import org.springframework.security.core.userdetails.UserDetails
  * Created by mskwon on 2024/01/13.
  */
 class PrincipalDetails(
-    member: Member
+    var member: Member,
 ): UserDetails {
 
     private val log = KotlinLogging.logger {  }
 
-    var member: Member = member
-        private set
-
-    override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+    @JsonIgnore
+    override fun getAuthorities(): MutableCollection<GrantedAuthority> {
         log.info { "Role 검증" }
         val collection: MutableCollection<GrantedAuthority> = ArrayList()
         collection.add(GrantedAuthority { "ROLE_" + member.role })

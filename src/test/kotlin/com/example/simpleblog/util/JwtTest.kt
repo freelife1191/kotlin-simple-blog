@@ -22,12 +22,17 @@ class JwtTest {
 
     @Test
     fun generateJwtTest() {
-        val jwtAuthenticationProvider = JwtAuthenticationProvider()
+        val jwtAuthenticationProvider = JwtAuthenticationProvider(accessTokenExpireSecond = 60)
 
         val details = PrincipalDetails(Member.createFakeMember(1))
-        val accessToken = jwtAuthenticationProvider.generateAccessToken(details)
-        val email = jwtAuthenticationProvider.getMemberEmail(accessToken)
+        val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))
+        val decodedJWT = jwtAuthenticationProvider.validatedJwt(accessToken)
+        val principalString = decodedJWT.getClaim(jwtAuthenticationProvider.claimPrincipal).asString()
+        val principalDetails: PrincipalDetails = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
         log.info { "accessToken $accessToken" }
-        log.info { "email $email" }
+        log.info { "decodedJWT $decodedJWT" }
+        log.info { "principalString $principalString" }
+        log.info { "principalDetails $principalDetails" }
+        log.info { "result=>${principalDetails.member}" }
     }
 }

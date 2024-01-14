@@ -19,7 +19,7 @@
 - [X] blog 15. 스프링 시큐리티 적용 3 기본인증필터
 - [X] blog 16. 스프링 시큐리티 적용 4 실패/성공 핸들링
 - [X] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
-- [ ] blog 18. JWT Manager 수정
+- [X] blog 18. JWT Manager 수정
 - [ ] blog 19. ObjectMapper config
 - [ ] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보운
 - [ ] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
@@ -187,3 +187,8 @@ front: react + typescript + zustand
 ## blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
 - Member Role과 URL에 따른 인가처리
 - 로그인시 Member 정보 응답
+
+## blog 18. JWT Manager 수정
+- JwtAuthenticationProvider Refactoring
+- JWT 유효성 검증 로직 수정
+- Member Id 파라메터 추가

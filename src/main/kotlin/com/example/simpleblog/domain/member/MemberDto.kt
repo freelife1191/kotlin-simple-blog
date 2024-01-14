@@ -18,6 +18,7 @@ data class LoginDto(
 
 fun LoginDto.toEntity(): Member {
     return Member(
+        id = null,
         email = this.email ?: "",
         password = this.password ?: "",
         role = this.role ?: Role.USER

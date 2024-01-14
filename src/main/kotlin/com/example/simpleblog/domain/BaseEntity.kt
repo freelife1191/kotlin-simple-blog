@@ -21,5 +21,5 @@ abstract class BaseEntity (
 abstract class BaseEntityId (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    var id: Long? = null
+    open var id: Long? = null
 )
