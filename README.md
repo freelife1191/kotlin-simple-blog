@@ -18,7 +18,7 @@
 - [X] blog 14. 스프링 시큐리티 적용 2 jwt 발급
 - [X] blog 15. 스프링 시큐리티 적용 3 기본인증필터
 - [X] blog 16. 스프링 시큐리티 적용 4 실패/성공 핸들링
-- [ ] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
+- [X] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
 - [ ] blog 18. JWT Manager 수정
 - [ ] blog 19. ObjectMapper config
 - [ ] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보운
@@ -183,3 +183,7 @@ front: react + typescript + zustand
 
 ## blog 16. 스프링 시큐리티 적용 4 실패/성공 핸들링
 - 토큰 인증 성공/실패 핸들링 처리 추가
+
+## blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
+- Member Role과 URL에 따른 인가처리
+- 로그인시 Member 정보 응답

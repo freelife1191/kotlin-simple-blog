@@ -2,12 +2,15 @@ package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.JsonUtils
+import com.example.simpleblog.util.func.responseData
+import com.example.simpleblog.util.value.CommonResDto
 import com.fasterxml.jackson.databind.ObjectMapper
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
 import org.springframework.http.HttpHeaders.AUTHORIZATION
+import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
@@ -44,6 +47,7 @@ class CustomUserNameAuthenticationFilter(
         log.info { "로그인 완료되어서 JWT 토큰 만들어서 response" }
         val principalDetails = authResult?.principal as PrincipalDetails
         val jwtToken = jwtAuthenticationProvider.generateAccessToken(principalDetails)
-        response?.addHeader(AUTHORIZATION,  "Bearer " + jwtToken)
+        response?.addHeader(AUTHORIZATION, "Bearer $jwtToken")
+        responseData(response, JsonUtils.toMapperJson(CommonResDto(HttpStatus.OK, "login success", principalDetails.member)))
     }
 }

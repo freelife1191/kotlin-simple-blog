@@ -1,6 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.MemberRepository
+import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.func.responseData
 import com.example.simpleblog.util.value.CommonResDto
@@ -66,8 +67,10 @@ class SecurityConfig(
                     .authenticationEntryPoint(CustomAuthenticationEntryPoint())
             }
             .authorizeHttpRequests {
-                it.requestMatchers("/**").authenticated()
-                // .anyRequest().permitAll()
+                it.requestMatchers("/v1/posts").hasAnyRole(Role.USER.name, Role.ADMIN.name)
+                    .anyRequest().permitAll()
+                // it.requestMatchers("/**").authenticated()
+
             }
 
         return http.build()
