@@ -1,5 +1,6 @@
 package com.example.simpleblog.config.security
 
+import com.example.simpleblog.domain.member.MemberRepository
 import mu.KotlinLogging
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -24,7 +25,9 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity(debug = false)
 class SecurityConfig(
-    private val authenticationConfiguration: AuthenticationConfiguration) {
+    private val authenticationConfiguration: AuthenticationConfiguration,
+    private val memberRepository: MemberRepository
+) {
 
     private val log = KotlinLogging.logger { }
 
@@ -42,8 +45,17 @@ class SecurityConfig(
             .sessionManagement { it.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .cors { it.configurationSource(corsConfig()) }
             .addFilter(loginFilter())
+            .addFilter(authenticationFilter())
 
         return http.build()
+    }
+
+    @Bean
+    fun authenticationFilter(): CustomBasicAuthenticationFilter {
+        return CustomBasicAuthenticationFilter(
+            authenticationManager = authenticationManager(),
+            memberRepository = memberRepository
+        )
     }
 
     @Bean

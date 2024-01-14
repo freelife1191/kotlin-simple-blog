@@ -12,11 +12,11 @@
 - [X] blog 8. dto validation
 - [X] blog 9. Custom Exception Handling
 - [X] blog 10. AOP Logging Aspect, Fetch Join
-- [ ] blog 11. Filter를 통한 인증처리
-- [ ] blog 12. 계획
-- [ ] blog 13. 스프링 시큐리티 적용 1
-- [ ] blog 14. 스프링 시큐리티 적용 2 jwt 발급
-- [ ] blog 15. 스프링 시큐리티 적용 3 기본인증필터
+- [X] blog 11. Filter를 통한 인증처리
+- [X] blog 12. 계획
+- [X] blog 13. 스프링 시큐리티 적용 1
+- [X] blog 14. 스프링 시큐리티 적용 2 jwt 발급
+- [X] blog 15. 스프링 시큐리티 적용 3 기본인증필터
 - [ ] blog 16. 스프링 시큐리티 적용 4 실패/성공 핸들링
 - [ ] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
 - [ ] blog 18. JWT Manager 수정
@@ -177,3 +177,6 @@ front: react + typescript + zustand
 - 참고
   - https://jwt.io/
   - https://twer.tistory.com/entry/Security-%EC%8A%A4%ED%94%84%EB%A7%81-%EC%8B%9C%ED%81%90%EB%A6%AC%ED%8B%B0%EC%9D%98-%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98%EA%B5%AC%EC%A1%B0-%EB%B0%8F-%ED%9D%90%EB%A6%84
+
+## blog 15. 스프링 시큐리티 적용 3 기본인증필터
+- 로그인 사용자 유효성 처리 (BasicAuthenticationFilter)
