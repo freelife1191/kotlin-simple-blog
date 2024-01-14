@@ -5,6 +5,9 @@ import com.example.simpleblog.domain.member.toEntity
 import com.example.simpleblog.domain.post.*
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
+import org.springframework.security.access.annotation.Secured
+import org.springframework.security.access.prepost.PostAuthorize
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
 
@@ -15,6 +18,9 @@ import org.springframework.transaction.annotation.Transactional
 class PostService(
     private val postRepository: PostRepository
 ) {
+    @PreAuthorize("hasRole('ADMIN')")
+    // @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
+    // @Secured(*["ROLE_ADMIN", "ROLE_USER"])
     @Transactional(readOnly = true)
     fun findPosts(pageable: Pageable): Page<PostRes> =
         postRepository.findPosts(pageable).map { it.toDto() }

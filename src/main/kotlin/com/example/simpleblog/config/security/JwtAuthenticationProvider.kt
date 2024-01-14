@@ -34,12 +34,12 @@ class JwtAuthenticationProvider(
             .sign(Algorithm.HMAC512(secretKey))
     }
 
-    fun getMemberEmail(token: String): String? {
+    fun getMemberEmail(token: String): String {
         return JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token)
             .getClaim(claimEmail).asString()
     }
 
-    fun getPrincipalStringByAccessToken(accessToken: String): String? =
+    fun getPrincipalStringByAccessToken(accessToken: String): String =
         validatedJwt(accessToken).getClaim(claimPrincipal).asString()
 
     fun validatedJwt(accessToken: String): DecodedJWT {

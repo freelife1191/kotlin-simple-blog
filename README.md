@@ -21,7 +21,7 @@
 - [X] blog 17. 스프링 시큐리티 적용 5 url 기반 인가처리
 - [X] blog 18. JWT Manager 수정
 - [X] blog 19. ObjectMapper config
-- [ ] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보운
+- [X] blog 20. 스프링 시큐리티 적용 6 메서드 호출 보안
 - [ ] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
 - [ ] blog 22. refreshToken Cookie로 감싸기
 - [ ] blog 23. JWT 예외처리
@@ -198,3 +198,10 @@ front: react + typescript + zustand
   - `getPrincipalStringByAccessToken`
 - JWT 토큰 ExpireDate 수정 nano -> millis
 - JsonUtils Kotlin Module 설정 추가
+
+## blog 20. 스프링 시큐리티 적용 6 메서드 호출 보안
+- 좀 더 정밀한 API 보안이 필요한 경우 메서드 단위 설정
+  - `@EnableMethodSecurity(securedEnabled = true)`
+  - `@Secured(*["ROLE_ADMIN", "ROLE_USER"])`
+  - `@PostAuthorize("hasRole('ADMIN') or hasRole('USER')")`
+  - `@PreAuthorize("hasRole('ADMIN')")`

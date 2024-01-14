@@ -4,6 +4,7 @@ import jakarta.persistence.NoResultException
 import mu.KotlinLogging
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.security.authentication.AuthenticationServiceException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -39,7 +40,7 @@ class GlobalExceptionHandler {
 
     @ExceptionHandler(NoResultException::class)
     fun handleNoResultException(e: NoResultException): ResponseEntity<ErrorResponse> {
-        log.error { "handleMethodArgumentNotValidException $e" }
+        log.error { "handleNoResultException $e" }
         val of = ErrorResponse.of(ErrorCode.NO_RESULT)
         return ResponseEntity(of, HttpStatus.NO_CONTENT)
     }

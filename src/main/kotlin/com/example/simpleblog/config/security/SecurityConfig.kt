@@ -1,21 +1,18 @@
 package com.example.simpleblog.config.security
 
-import com.example.simpleblog.domain.member.MemberRepository
 import com.example.simpleblog.domain.member.Role
-import com.example.simpleblog.util.JsonUtils
-import com.example.simpleblog.util.func.responseData
-import com.example.simpleblog.util.value.CommonResDto
-import com.fasterxml.jackson.databind.json.JsonMapper
-import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration
+import org.springframework.security.config.annotation.authentication.configuration.EnableGlobalAuthentication
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -24,7 +21,6 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
-import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.AuthenticationEntryPoint
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.access.AccessDeniedHandler
@@ -40,6 +36,7 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
  */
 @Configuration
 @EnableWebSecurity(debug = false)
+@EnableMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
 class SecurityConfig(
     private val authenticationConfiguration: AuthenticationConfiguration,
 ) {
@@ -49,7 +46,14 @@ class SecurityConfig(
     // @Bean
     fun webSecurityCustomizer(): WebSecurityCustomizer? {
         return WebSecurityCustomizer { web: WebSecurity -> web.ignoring().requestMatchers("/**") }
+        // h2-console 사용 및 resources 접근 허용 설정
+        // return WebSecurityCustomizer { web: WebSecurity ->
+        //     web.ignoring()
+        //         .requestMatchers(PathRequest.toH2Console())
+        //         .requestMatchers(PathRequest.toStaticResources().atCommonLocations())
+        // }
     }
+
     @Bean
     fun filterChainBasic(http: HttpSecurity): SecurityFilterChain {
 
@@ -146,6 +150,7 @@ class SecurityConfig(
     fun loginFilter(): UsernamePasswordAuthenticationFilter {
         val authenticationFilter = CustomUserNameAuthenticationFilter()
         authenticationFilter.setAuthenticationManager(authenticationManager())
+        authenticationFilter.setFilterProcessesUrl("/login")
         authenticationFilter.setAuthenticationFailureHandler(CustomFailureHandler())
         authenticationFilter.setAuthenticationSuccessHandler(CustomSuccessHandler())
         return authenticationFilter
