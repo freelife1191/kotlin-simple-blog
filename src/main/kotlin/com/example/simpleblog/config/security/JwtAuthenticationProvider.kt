@@ -14,41 +14,41 @@ import java.util.concurrent.TimeUnit
  * Created by mskwon on 2024/01/13.
  */
 class JwtAuthenticationProvider(
-    accessTokenExpireSecond: Long = 300 // 5분
+    val accessTokenExpireSecond: Long = 300, // 5분
+    val refreshTokenExpireDay: Long = 7 // 7일
 ) {
     private val log = KotlinLogging.logger {  }
-
-    private val secretKey: String = "simpleblog"
+    private val accessSecretKey: String = "accessSimpleblog"
+    private val refreshSecretKey: String = "refreshSimpleblog"
     private val claimEmail = "email"
     val claimPrincipal = "principal"
-    private val accessTokenExpireMinute: Long = accessTokenExpireSecond
     private val jwtSubject = "my-token"
 
-    fun generateRefreshToken(principal: String) {
-
+    fun generateRefreshToken(principal: String): String {
+        val expireDate = Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(refreshTokenExpireDay))
+        log.info { "refreshToken ExpireDate=>$expireDate" }
+        return doGenerateToken(expireDate, principal, refreshSecretKey)
     }
 
     fun generateAccessToken(principal: String): String {
-        val expireDate = Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(accessTokenExpireMinute))
+        val expireDate = Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(accessTokenExpireSecond))
         log.info { "accessToken ExpireDate=>$expireDate" }
-        return JWT.create()
+        return doGenerateToken(expireDate, principal, accessSecretKey)
+    }
+
+    private fun doGenerateToken(expireDate: Date, principal: String, secretKey: String) =
+        JWT.create()
             .withSubject(jwtSubject)
             .withExpiresAt(expireDate)
             .withClaim(claimPrincipal, principal)
             .sign(Algorithm.HMAC512(secretKey))
-    }
-
-    fun getMemberEmail(token: String): String {
-        return JWT.require(Algorithm.HMAC512(secretKey)).build().verify(token)
-            .getClaim(claimEmail).asString()
-    }
 
     fun getPrincipalStringByAccessToken(accessToken: String): String =
         validatedJwt(accessToken).getClaim(claimPrincipal).asString()
 
     fun validatedJwt(accessToken: String): DecodedJWT {
         try {
-            val verifier: JWTVerifier = JWT.require(Algorithm.HMAC512(secretKey)) // specify an specific claim validations
+            val verifier: JWTVerifier = JWT.require(Algorithm.HMAC512(accessSecretKey)) // specify an specific claim validations
                 // .withIssuer("auth0") // reusable verifier instance
                 .build()
             return verifier.verify(accessToken)

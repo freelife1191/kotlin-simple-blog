@@ -1,6 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.member.LoginDto
+import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.func.responseData
 import com.example.simpleblog.util.value.CommonResDto
@@ -8,11 +9,14 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
+import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpHeaders.AUTHORIZATION
+import org.springframework.http.HttpHeaders.SET_COOKIE
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
+import java.util.concurrent.TimeUnit
 
 /**
  * Created by mskwon on 2024/01/13.
@@ -45,8 +49,17 @@ class CustomUserNameAuthenticationFilter(
     ) {
         log.info { "로그인 완료되어서 JWT 토큰 만들어서 response" }
         val principalDetails = authResult?.principal as PrincipalDetails
-        val jwtToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(principalDetails))
-        response?.addHeader(AUTHORIZATION, "Bearer $jwtToken")
+        val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(principalDetails))
+        val refreshToken = jwtAuthenticationProvider.generateRefreshToken(JsonUtils.toMapperJson(principalDetails))
+
+        val refreshCookie = CookieProvider.createCookie(
+            "refreshCookie",
+            refreshToken,
+            TimeUnit.DAYS.toSeconds(jwtAuthenticationProvider.refreshTokenExpireDay),
+        )
+        response?.addHeader(AUTHORIZATION, "Bearer $accessToken")
+        // 모든 브라우저에서 거부되지 않도록 sameSite=Strict/Lax/None; Secure로 설정되지 않은 경우 Set-Cookie 속성으로 Header에 쿠키를 추가
+        response?.addHeader(SET_COOKIE, refreshCookie.toString())
         responseData(response, JsonUtils.toMapperJson(CommonResDto(HttpStatus.OK, "login success", principalDetails.member)))
     }
 }

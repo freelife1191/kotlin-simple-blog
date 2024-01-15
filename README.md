@@ -209,3 +209,7 @@ front: react + typescript + zustand
 ## blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
 - SpringSecurity LogOutHandler 적용
 - Member 객체 Refactoring
+
+## blog 22. refreshToken Cookie로 감싸기
+- Refresh Token 추가
+- Cookie로 Refresh Token을 감싸서 응답되도록 처리
