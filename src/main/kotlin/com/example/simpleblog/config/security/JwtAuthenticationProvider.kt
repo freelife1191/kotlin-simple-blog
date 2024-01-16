@@ -43,19 +43,46 @@ class JwtAuthenticationProvider(
             .withClaim(claimPrincipal, principal)
             .sign(Algorithm.HMAC512(secretKey))
 
-    fun getPrincipalStringByAccessToken(accessToken: String): String =
-        validatedJwt(accessToken).getClaim(claimPrincipal).asString()
+    fun getPrincipalStringByAccessToken(accessToken: String): String {
+        val decodedJWT = getDecodedJwt(secretKey = accessSecretKey, token = accessToken)
+        return decodedJWT.getClaim(claimPrincipal).asString()
+    }
 
-    fun validatedJwt(accessToken: String): DecodedJWT {
+    fun getPrincipalStringByRefreshToken(refreshToken: String): String {
+        val decodedJWT = getDecodedJwt(secretKey = refreshSecretKey, token = refreshToken)
+        return decodedJWT.getClaim(claimPrincipal).asString()
+    }
+
+    private fun getDecodedJwt(secretKey: String, token: String): DecodedJWT {
+        val verifier: JWTVerifier = JWT.require(Algorithm.HMAC512(secretKey)) // specify an specific claim validations
+            .build()
+        return verifier.verify(token)
+    }
+
+    fun validAccessToken(token: String): TokenValidResult {
+        return validatedJwt(token, accessSecretKey)
+    }
+
+    fun validRefreshToken(token: String): TokenValidResult {
+        return validatedJwt(token, refreshSecretKey)
+    }
+
+    fun validatedJwt(token: String, secretKey: String): TokenValidResult { // TRUE | JWTVerificationException
         try {
-            val verifier: JWTVerifier = JWT.require(Algorithm.HMAC512(accessSecretKey)) // specify an specific claim validations
-                // .withIssuer("auth0") // reusable verifier instance
-                .build()
-            return verifier.verify(accessToken)
+            getDecodedJwt(secretKey , token)
+            return TokenValidResult.Success()
         } catch (e: JWTVerificationException) {
             // Invalid signature/claims
-            log.error { "error=>${e.stackTraceToString()}" }
-            throw RuntimeException("Invalid jwt")
+            // log.error { "error=>${e.stackTraceToString()}" }
+            return TokenValidResult.Failure(e)
         }
     }
+}
+
+/**
+ * 코틀린으로 Union Type 같이 흉내
+ */
+sealed class TokenValidResult {
+    class Success(val successValue: Boolean = true) : TokenValidResult()
+    class Failure(val exception: JWTVerificationException) : TokenValidResult()
 }

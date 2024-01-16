@@ -26,13 +26,8 @@ class JwtTest {
 
         val details = PrincipalDetails(Member.createFakeMember(1))
         val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))
-        val decodedJWT = jwtAuthenticationProvider.validatedJwt(accessToken)
-        val principalString = decodedJWT.getClaim(jwtAuthenticationProvider.claimPrincipal).asString()
-        val principalDetails: PrincipalDetails = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
+        val decodedJWT = jwtAuthenticationProvider.validatedJwt(accessToken, "accessSimpleblog")
         log.info { "accessToken $accessToken" }
         log.info { "decodedJWT $decodedJWT" }
-        log.info { "principalString $principalString" }
-        log.info { "principalDetails $principalDetails" }
-        log.info { "result=>${principalDetails.member}" }
     }
 }

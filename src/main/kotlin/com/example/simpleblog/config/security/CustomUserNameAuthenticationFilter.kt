@@ -1,5 +1,7 @@
 package com.example.simpleblog.config.security
 
+import com.auth0.jwt.exceptions.JWTVerificationException
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.JsonUtils
@@ -15,6 +17,7 @@ import org.springframework.http.HttpHeaders.SET_COOKIE
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.util.concurrent.TimeUnit
 

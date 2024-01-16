@@ -1,6 +1,6 @@
 package com.example.simpleblog.config.security
 
-import com.example.simpleblog.domain.member.MemberRepository
+import com.auth0.jwt.exceptions.TokenExpiredException
 import com.example.simpleblog.util.JsonUtils
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -27,14 +27,24 @@ class CustomBasicAuthenticationFilter(
     override fun doFilterInternal(request: HttpServletRequest, response: HttpServletResponse, chain: FilterChain) {
 
         log.info { "권한이나 인증이 필요한 요청이 들어옴" }
-        val token = request.getHeader(AUTHORIZATION)?.replace("Bearer ", "")
-        if (token == null) {
+        val accessToken = request.getHeader(AUTHORIZATION)?.replace("Bearer ", "")
+        if (accessToken == null) {
             log.info { "token이 없음" }
             chain.doFilter(request, response)
             return
         }
-        log.debug { "token: $token" }
-        val principalJsonData = jwtAuthenticationProvider.getPrincipalStringByAccessToken(token) ?: throw RuntimeException("memberEmail을 찾을 수 없습니다")
+        log.debug { "access token: $accessToken" }
+
+        val accessTokenResult: TokenValidResult = jwtAuthenticationProvider.validAccessToken(accessToken)
+        if (accessTokenResult is TokenValidResult.Failure) {
+            if (accessTokenResult.exception is TokenExpiredException) {
+                log.info { "getClass==>${accessTokenResult.javaClass}" }
+            } else {
+                log.error { accessTokenResult.exception.stackTraceToString() }
+            }
+        }
+
+        val principalJsonData = jwtAuthenticationProvider.getPrincipalStringByAccessToken(accessToken)
         val principalDetails = JsonUtils.toMapperObject(principalJsonData, PrincipalDetails::class)
         // val member = memberRepository.findMemberByEmail(principalJsonData)
         // val principalDetails = PrincipalDetails(member)
@@ -47,4 +57,26 @@ class CustomBasicAuthenticationFilter(
         SecurityContextHolder.getContext().authentication = authentication
         chain.doFilter(request, response)
     }
+
+    /*
+    private fun reissueAccessToken(
+        e: JWTVerificationException,
+        req: HttpServletRequest?
+    ) {
+        if (e is TokenExpiredException) {
+            val refreshToken = CookieProvider.getCookie(req!!, "refreshCookie").orElseThrow()
+            val validatedJwt = validatedJwt(refreshToken)
+            val principalString = getPrincipalStringByAccessToken(refreshToken)
+            val principalDetails = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
+
+            val authentication: Authentication = UsernamePasswordAuthenticationToken(
+                principalDetails,
+                principalDetails.password,
+                principalDetails.authorities
+            )
+
+            SecurityContextHolder.getContext().authentication = authentication // 인증 처리 끝
+        }
+    }
+    */
 }
