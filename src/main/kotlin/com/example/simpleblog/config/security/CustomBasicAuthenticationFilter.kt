@@ -38,45 +38,59 @@ class CustomBasicAuthenticationFilter(
 
         val accessTokenResult: TokenValidResult = jwtAuthenticationProvider.validAccessToken(accessToken)
         if (accessTokenResult is TokenValidResult.Failure) {
-            if (accessTokenResult.exception is TokenExpiredException) {
+            handleTokenException(accessTokenResult) {
                 log.info { "getClass==>${accessTokenResult.exception.javaClass}" }
-
                 val refreshToken = CookieProvider.getCookie(request, CookieProvider.CookieName.REFRESH_COOKIE).orElseThrow()
                 val refreshTokenResult = jwtAuthenticationProvider.validRefreshToken(refreshToken)
-
                 if (refreshTokenResult is TokenValidResult.Failure) {
                     throw RuntimeException("Invalid RefreshToken")
                 }
-
                 val principalString = jwtAuthenticationProvider.getPrincipalStringByAccessToken(refreshToken)
                 val details = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
-                val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))
-                response.addHeader(AUTHORIZATION, "Bearer $accessToken")
-
-                val authentication: Authentication = UsernamePasswordAuthenticationToken(
-                    details,
-                    details.password,
-                    details.authorities
-                )
-
-                // Authentication 객체가 인증이 통과했다는 것을 보장
-                SecurityContextHolder.getContext().authentication = authentication
-                chain.doFilter(request, response)
-                return
-            } else {
-                log.error { accessTokenResult.exception.stackTraceToString() }
+                reissueAccessToken(details, response)
+                setAuthentication(details, chain, request, response)
             }
+            return
         }
         val principalJsonData = jwtAuthenticationProvider.getPrincipalStringByAccessToken(accessToken)
         val principalDetails = JsonUtils.toMapperObject(principalJsonData, PrincipalDetails::class)
+        setAuthentication(principalDetails, chain, request, response)
+    }
+
+    private fun setAuthentication(
+        details: PrincipalDetails,
+        chain: FilterChain,
+        request: HttpServletRequest,
+        response: HttpServletResponse
+    ) {
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
-            principalDetails,
-            principalDetails.password,
-            principalDetails.authorities
+            details,
+            details.password,
+            details.authorities
         )
 
         // Authentication 객체가 인증이 통과했다는 것을 보장
         SecurityContextHolder.getContext().authentication = authentication
         chain.doFilter(request, response)
+    }
+
+    private fun reissueAccessToken(
+        details: PrincipalDetails,
+        response: HttpServletResponse
+    ) {
+        log.info { "accessToken 재발급" }
+
+        val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))
+        response.addHeader(AUTHORIZATION, "Bearer $accessToken")
+    }
+
+    private fun handleTokenException(tokenValidResult: TokenValidResult.Failure, func: () -> Unit) {
+        when (tokenValidResult.exception) {
+            is TokenExpiredException -> func()
+            else -> {
+                log.error { tokenValidResult.exception.stackTraceToString() }
+                throw tokenValidResult.exception
+            }
+        }
     }
 }

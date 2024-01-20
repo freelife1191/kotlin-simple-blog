@@ -11,4 +11,7 @@ class TestController {
 
     @GetMapping("/health")
     fun healthTest(): String = "hello kotlin-blog"
+
+    // @GetMapping("/error") // 시큐리티 Default error redirect 주소
+    // fun errorTest(): String = "error"
 }

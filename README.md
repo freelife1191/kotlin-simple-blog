@@ -26,7 +26,7 @@
 - [X] blog 22. refreshToken Cookie로 감싸기
 - [X] blog 23. JWT 예외처리
 - [X] blog 24. accessToken 재발급
-- [ ] blog 25. Currying function in Kotlin
+- [X] blog 25. Currying function in Kotlin
 - [ ] blog 26. Bean static method Access, 회원가입 처리
 - [ ] blog 27. InMemoryDB 동시성 테스트
 - [ ] blog 28. Embedded Redis 셋팅
@@ -219,3 +219,6 @@ front: react + typescript + zustand
 
 ## blog 24. accessToken 재발급
 - accessToken 만료시 refreshToken을 통해 accessToken 재발급 처리
+
+## blog 25. Currying function in Kotlin
+- CustomBasicAuthenticationFilter에 Currying function을 활용한 함수형 프로그래밍 적용
