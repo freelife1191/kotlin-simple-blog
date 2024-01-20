@@ -1,6 +1,5 @@
 package com.example.simpleblog.util
 
-import jakarta.servlet.http.Cookie
 import jakarta.servlet.http.HttpServletRequest
 import mu.KotlinLogging
 import org.springframework.http.ResponseCookie
@@ -17,8 +16,8 @@ object CookieProvider {
         TODO()
     }
 
-    fun createCookie(cookieName: String, value: String, maxAge: Long): ResponseCookie {
-        return ResponseCookie.from(cookieName, value)
+    fun createCookie(cookieName: CookieName, value: String, maxAge: Long): ResponseCookie {
+        return ResponseCookie.from(cookieName.name, value)
             .httpOnly(true)
             .secure(false)
             .path("/")
@@ -26,14 +25,18 @@ object CookieProvider {
             .build()
     }
 
-    fun getCookie(req: HttpServletRequest, cookieName: String): Optional<String> {
+    fun getCookie(req: HttpServletRequest, cookieName: CookieName): Optional<String> {
         val cookieValue = req.cookies.filter { cookie ->
-            cookie.name == cookieName
+            cookie.name == cookieName.name
         }.map { cookie ->
             cookie.value
         }.firstOrNull()
 
         log.info { "cookieValue: $cookieValue" }
         return Optional.ofNullable(cookieValue)
+    }
+
+    enum class CookieName {
+        REFRESH_COOKIE
     }
 }

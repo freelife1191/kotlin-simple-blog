@@ -1,6 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.auth0.jwt.exceptions.TokenExpiredException
+import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.JsonUtils
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -38,45 +39,44 @@ class CustomBasicAuthenticationFilter(
         val accessTokenResult: TokenValidResult = jwtAuthenticationProvider.validAccessToken(accessToken)
         if (accessTokenResult is TokenValidResult.Failure) {
             if (accessTokenResult.exception is TokenExpiredException) {
-                log.info { "getClass==>${accessTokenResult.javaClass}" }
+                log.info { "getClass==>${accessTokenResult.exception.javaClass}" }
+
+                val refreshToken = CookieProvider.getCookie(request, CookieProvider.CookieName.REFRESH_COOKIE).orElseThrow()
+                val refreshTokenResult = jwtAuthenticationProvider.validRefreshToken(refreshToken)
+
+                if (refreshTokenResult is TokenValidResult.Failure) {
+                    throw RuntimeException("Invalid RefreshToken")
+                }
+
+                val principalString = jwtAuthenticationProvider.getPrincipalStringByAccessToken(refreshToken)
+                val details = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
+                val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))
+                response.addHeader(AUTHORIZATION, "Bearer $accessToken")
+
+                val authentication: Authentication = UsernamePasswordAuthenticationToken(
+                    details,
+                    details.password,
+                    details.authorities
+                )
+
+                // Authentication 객체가 인증이 통과했다는 것을 보장
+                SecurityContextHolder.getContext().authentication = authentication
+                chain.doFilter(request, response)
+                return
             } else {
                 log.error { accessTokenResult.exception.stackTraceToString() }
             }
         }
-
         val principalJsonData = jwtAuthenticationProvider.getPrincipalStringByAccessToken(accessToken)
         val principalDetails = JsonUtils.toMapperObject(principalJsonData, PrincipalDetails::class)
-        // val member = memberRepository.findMemberByEmail(principalJsonData)
-        // val principalDetails = PrincipalDetails(member)
         val authentication: Authentication = UsernamePasswordAuthenticationToken(
             principalDetails,
             principalDetails.password,
             principalDetails.authorities
         )
+
         // Authentication 객체가 인증이 통과했다는 것을 보장
         SecurityContextHolder.getContext().authentication = authentication
         chain.doFilter(request, response)
     }
-
-    /*
-    private fun reissueAccessToken(
-        e: JWTVerificationException,
-        req: HttpServletRequest?
-    ) {
-        if (e is TokenExpiredException) {
-            val refreshToken = CookieProvider.getCookie(req!!, "refreshCookie").orElseThrow()
-            val validatedJwt = validatedJwt(refreshToken)
-            val principalString = getPrincipalStringByAccessToken(refreshToken)
-            val principalDetails = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
-
-            val authentication: Authentication = UsernamePasswordAuthenticationToken(
-                principalDetails,
-                principalDetails.password,
-                principalDetails.authorities
-            )
-
-            SecurityContextHolder.getContext().authentication = authentication // 인증 처리 끝
-        }
-    }
-    */
 }

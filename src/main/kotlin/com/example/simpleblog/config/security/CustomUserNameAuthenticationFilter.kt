@@ -4,6 +4,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.exceptions.TokenExpiredException
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.CookieProvider
+import com.example.simpleblog.util.CookieProvider.CookieName
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.func.responseData
 import com.example.simpleblog.util.value.CommonResDto
@@ -56,7 +57,7 @@ class CustomUserNameAuthenticationFilter(
         val refreshToken = jwtAuthenticationProvider.generateRefreshToken(JsonUtils.toMapperJson(principalDetails))
 
         val refreshCookie = CookieProvider.createCookie(
-            "refreshCookie",
+            CookieName.REFRESH_COOKIE,
             refreshToken,
             TimeUnit.DAYS.toSeconds(jwtAuthenticationProvider.refreshTokenExpireDay),
         )

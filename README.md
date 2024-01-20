@@ -25,7 +25,7 @@
 - [X] blog 21. 스프링 시큐리티 적용 7 CustomLogoutHandler
 - [X] blog 22. refreshToken Cookie로 감싸기
 - [X] blog 23. JWT 예외처리
-- [ ] blog 24. accessToken 재발급
+- [X] blog 24. accessToken 재발급
 - [ ] blog 25. Currying function in Kotlin
 - [ ] blog 26. Bean static method Access, 회원가입 처리
 - [ ] blog 27. InMemoryDB 동시성 테스트
@@ -216,3 +216,6 @@ front: react + typescript + zustand
 
 ## blog 23. JWT 예외처리
 - JWT 예외처리 및 응답처리 리팩토링
+
+## blog 24. accessToken 재발급
+- accessToken 만료시 refreshToken을 통해 accessToken 재발급 처리
