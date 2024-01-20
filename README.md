@@ -27,7 +27,7 @@
 - [X] blog 23. JWT 예외처리
 - [X] blog 24. accessToken 재발급
 - [X] blog 25. Currying function in Kotlin
-- [ ] blog 26. Bean static method Access, 회원가입 처리
+- [X] blog 26. Bean static method Access, 회원가입 처리
 - [ ] blog 27. InMemoryDB 동시성 테스트
 - [ ] blog 28. Embedded Redis 셋팅
 - [ ] blog 29. Kotlin JDSL Dynamic Query
@@ -222,3 +222,8 @@ front: react + typescript + zustand
 
 ## blog 25. Currying function in Kotlin
 - CustomBasicAuthenticationFilter에 Currying function을 활용한 함수형 프로그래밍 적용
+
+## blog 26. Bean static method Access, 회원가입 처리
+- 회원가입 서비스 AuthService로 이동
+- rawPassword encode 처리를 위해 BeanAccessor 추가
+- 

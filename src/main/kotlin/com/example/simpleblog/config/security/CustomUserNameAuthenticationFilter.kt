@@ -1,7 +1,5 @@
 package com.example.simpleblog.config.security
 
-import com.auth0.jwt.exceptions.JWTVerificationException
-import com.auth0.jwt.exceptions.TokenExpiredException
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.CookieProvider.CookieName
@@ -12,13 +10,11 @@ import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import mu.KotlinLogging
-import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpHeaders.AUTHORIZATION
 import org.springframework.http.HttpHeaders.SET_COOKIE
 import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
-import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import java.util.concurrent.TimeUnit
 
@@ -41,7 +37,7 @@ class CustomUserNameAuthenticationFilter(
         } catch (e: Exception) {
             log.error { "loginFilter: 로그인 요청 Dto 생성 중 실패! ${e.stackTraceToString()}" }
         }
-        val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.password)
+        val authenticationToken = UsernamePasswordAuthenticationToken(loginDto.email, loginDto.rawPassword)
         return this.authenticationManager.authenticate(authenticationToken)
     }
 

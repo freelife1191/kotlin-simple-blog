@@ -88,7 +88,7 @@ class MemberControllerTest : BaseRestControllerTest() {
             jsonContent(
                 LoginDto(
                     email = "aaa@aaa.com",
-                    password = "1234",
+                    rawPassword = "1234",
                     role = Role.USER)
             )
         }
@@ -110,7 +110,7 @@ class MemberControllerTest : BaseRestControllerTest() {
             jsonContent(
                 LoginDto(
                     email = null,
-                    password = "1234",
+                    rawPassword = "1234",
                     role = Role.USER)
             )
         }

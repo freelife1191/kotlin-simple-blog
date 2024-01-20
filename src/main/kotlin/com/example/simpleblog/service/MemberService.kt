@@ -19,11 +19,6 @@ class MemberService(
         memberRepository.findMembers(pageable).map { it.toDto() }
 
     @Transactional
-    fun saveMember(dto: LoginDto): MemberRes {
-        return memberRepository.save(dto.toEntity()).toDto()
-    }
-
-    @Transactional
     fun deleteMember(id: Long) {
         return memberRepository.deleteById(id)
     }
@@ -33,6 +28,6 @@ class MemberService(
         return memberRepository.findById(id)
             .orElseThrow {
                 throw MemberNotFoundException(id)
-            }.toDto();
+            }.toDto()
     }
 }

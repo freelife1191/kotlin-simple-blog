@@ -45,8 +45,4 @@ class MemberController(
     @DeleteMapping("/member/{id}")
     fun deleteById(@PathVariable id: Long): CommonResDto<Unit> =
         CommonResDto(OK, "delete Member by id", memberService.deleteMember(id))
-
-    @PostMapping("/member")
-    fun save(@RequestBody @Valid dto: LoginDto): CommonResDto<MemberRes> =
-        CommonResDto(OK, "save member", memberService.saveMember(dto))
 }

@@ -1,5 +1,6 @@
 package com.example.simpleblog.config
 
+import com.example.simpleblog.domain.comment.CommentRepository
 import com.example.simpleblog.domain.member.*
 import com.example.simpleblog.domain.post.Post
 import com.example.simpleblog.domain.post.PostRepository
@@ -10,6 +11,7 @@ import mu.KotlinLogging
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.event.EventListener
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 /**
  * Created by mskwon on 2023/07/15.
@@ -17,7 +19,8 @@ import org.springframework.context.event.EventListener
 @Configuration
 class InitData(
     private val memberRepository: MemberRepository,
-    private val postRepository: PostRepository
+    private val postRepository: PostRepository,
+    private val commentRepository: CommentRepository,
 ) {
     // https://github.com/serpro69/kotlin-faker
     val faker = faker {  }
@@ -53,7 +56,7 @@ class InitData(
 
     private fun generateMember(): Member = LoginDto(
             email = faker.internet.safeEmail(),
-            password = "1234",
+            rawPassword = "1234",
             role = Role.USER
     ).toEntity()
 
@@ -61,5 +64,6 @@ class InitData(
             title = faker.theExpanse.ships(),
             content = faker.quote.matz(),
             memberId = memberId.toLong()
+            // memberId = (0 .. 100).random().toLong()
     ).toEntity()
 }
