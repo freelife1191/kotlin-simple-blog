@@ -29,7 +29,7 @@
 - [X] blog 25. Currying function in Kotlin
 - [X] blog 26. Bean static method Access, 회원가입 처리
 - [X] blog 27. InMemoryDB 동시성 테스트
-- [ ] blog 28. Embedded Redis 셋팅
+- [X] blog 28. Embedded Redis 셋팅
 - [ ] blog 29. Kotlin JDSL Dynamic Query
 - [ ] blog 30. @DataJpaTest with Kotlin JDSL
 - [ ] blog 31. 요청 url/응답 DTO 공통관심사 분리
@@ -232,3 +232,7 @@ front: react + typescript + zustand
 - jwt expire 설정값 application.yml 설정으로 변경
 - 유효기간을 가지면서 동시성을 지원해주는 HashMap 라이브러리(`expiringmap`) 추가
 - ExpireMap을 활용한 RefreshToken 관리
+
+## blog 28. Embedded Redis 셋팅
+- Embedded Redis 셋팅
+- Embedded Redis를 활용한 테스트 코드 추가

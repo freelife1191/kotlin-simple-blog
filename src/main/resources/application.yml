@@ -56,6 +56,11 @@ spring:
         globally_quoted_identifiers: true # 테이블 네임을 quoted 문자로 감싸서 네이밍 충돌이 일어나지 않게 방지
         #format_sql: true
     show-sql: true
+  data:
+    redis:
+      host: localhost
+      port: 16379
+      client-type: lettuce
 # p6spy JPA Query Log Format
 decorator:
   datasource:

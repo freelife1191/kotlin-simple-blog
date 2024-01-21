@@ -2,6 +2,7 @@ package com.example.simpleblog.config.security
 
 import com.example.simpleblog.domain.HashMapRepositoryImpl
 import com.example.simpleblog.domain.InMemoryRepository
+import com.example.simpleblog.domain.RedisRepositoryImpl
 import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.func.responseData
@@ -13,6 +14,7 @@ import mu.KotlinLogging
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.AuthenticationManager
@@ -44,9 +46,10 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
  */
 @Configuration
 @EnableWebSecurity(debug = false)
-@EnableMethodSecurity(securedEnabled = true) // @Secured 어노테이션 활성화
+@EnableMethodSecurity(securedEnabled = true, prePostEnabled = true) // @Secured 어노테이션 활성화
 class SecurityConfig(
     private val authenticationConfiguration: AuthenticationConfiguration,
+    private val redisTemplate: RedisTemplate<String, Any>
 ) {
 
     private val log = KotlinLogging.logger { }
@@ -158,7 +161,8 @@ class SecurityConfig(
 
     @Bean
     fun inMemoryRepository(): InMemoryRepository {
-        return HashMapRepositoryImpl()
+        // return HashMapRepositoryImpl()
+        return RedisRepositoryImpl(this.redisTemplate)
     }
 
     @Bean

@@ -50,7 +50,7 @@ dependencies {
     // implementation("org.springframework.boot:spring-boot-starter-actuator")
     // implementation("org.springframework.boot:spring-boot-starter-cache")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
-    // implementation("org.springframework.boot:spring-boot-starter-data-redis")
+    implementation("org.springframework.boot:spring-boot-starter-data-redis")
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-validation")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -105,6 +105,8 @@ dependencies {
 
     // 유효기간을 가지면서 동시성을 지원해주는 HashMap 라이브러리
     implementation("net.jodah:expiringmap:0.5.11")
+    // Embedded Redis
+    implementation("com.github.codemonstur:embedded-redis:1.3.0")
 
 }
 
