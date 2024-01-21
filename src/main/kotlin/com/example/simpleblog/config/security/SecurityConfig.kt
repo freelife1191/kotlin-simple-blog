@@ -1,5 +1,7 @@
 package com.example.simpleblog.config.security
 
+import com.example.simpleblog.domain.HashMapRepositoryImpl
+import com.example.simpleblog.domain.InMemoryRepository
 import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.util.JsonUtils
 import com.example.simpleblog.util.func.responseData
@@ -155,9 +157,15 @@ class SecurityConfig(
     }
 
     @Bean
+    fun inMemoryRepository(): InMemoryRepository {
+        return HashMapRepositoryImpl()
+    }
+
+    @Bean
     fun authenticationFilter(): CustomBasicAuthenticationFilter {
         return CustomBasicAuthenticationFilter(
             authenticationManager = authenticationManager(),
+            memoryRepository = inMemoryRepository()
         )
     }
 
@@ -173,7 +181,7 @@ class SecurityConfig(
 
     @Bean
     fun loginFilter(): UsernamePasswordAuthenticationFilter {
-        val authenticationFilter = CustomUserNameAuthenticationFilter()
+        val authenticationFilter = CustomUserNameAuthenticationFilter(inMemoryRepository())
         authenticationFilter.setAuthenticationManager(authenticationManager())
         authenticationFilter.setFilterProcessesUrl("/login")
         authenticationFilter.setAuthenticationFailureHandler(CustomFailureHandler())

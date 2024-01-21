@@ -57,6 +57,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     // implementation("org.springframework.boot:spring-boot-starter-websocket")
     implementation("org.springframework.boot:spring-boot-docker-compose")
+    annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     compileOnly("org.projectlombok:lombok")
     developmentOnly("org.springframework.boot:spring-boot-devtools")
@@ -101,6 +102,10 @@ dependencies {
 
     // apache
     implementation("org.apache.commons:commons-lang3:3.14.0")
+
+    // 유효기간을 가지면서 동시성을 지원해주는 HashMap 라이브러리
+    implementation("net.jodah:expiringmap:0.5.11")
+
 }
 
 tasks.withType<KotlinCompile> {

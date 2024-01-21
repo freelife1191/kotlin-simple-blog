@@ -1,6 +1,7 @@
 package com.example.simpleblog.config.security
 
 import com.auth0.jwt.exceptions.TokenExpiredException
+import com.example.simpleblog.domain.InMemoryRepository
 import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.JsonUtils
 import jakarta.servlet.FilterChain
@@ -18,7 +19,8 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
  * Created by mskwon on 2024/01/14.
  */
 class CustomBasicAuthenticationFilter(
-    authenticationManager: AuthenticationManager
+    authenticationManager: AuthenticationManager,
+    private val memoryRepository: InMemoryRepository
 ): BasicAuthenticationFilter(authenticationManager) {
 
     val log = KotlinLogging.logger {  }
@@ -45,8 +47,9 @@ class CustomBasicAuthenticationFilter(
                 if (refreshTokenResult is TokenValidResult.Failure) {
                     throw RuntimeException("Invalid RefreshToken")
                 }
-                val principalString = jwtAuthenticationProvider.getPrincipalStringByAccessToken(refreshToken)
-                val details = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
+                // val principalString = jwtAuthenticationProvider.getPrincipalStringByAccessToken(refreshToken)
+                // val details = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
+                val details = memoryRepository.findByKey(refreshToken) as PrincipalDetails
                 reissueAccessToken(details, response)
                 setAuthentication(details, chain, request, response)
             }

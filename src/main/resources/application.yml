@@ -63,3 +63,7 @@ decorator:
       enable-logging: true
       #multiline: true
       #logging: slf4j
+blog:
+  jwt:
+    access-token-expire: 5m
+    refresh-token-expire: 7d

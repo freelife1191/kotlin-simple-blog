@@ -4,7 +4,7 @@ import com.example.simpleblog.config.security.JwtAuthenticationProvider
 import com.example.simpleblog.config.security.PrincipalDetails
 import com.example.simpleblog.domain.member.Member
 import mu.KotlinLogging
-import org.junit.Test
+import org.junit.jupiter.api.Test
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 /**
@@ -22,7 +22,7 @@ class JwtTest {
 
     @Test
     fun generateJwtTest() {
-        val jwtAuthenticationProvider = JwtAuthenticationProvider(accessTokenExpireSecond = 60)
+        val jwtAuthenticationProvider = JwtAuthenticationProvider()
 
         val details = PrincipalDetails(Member.createFakeMember(1))
         val accessToken = jwtAuthenticationProvider.generateAccessToken(JsonUtils.toMapperJson(details))

@@ -1,5 +1,7 @@
 package com.example.simpleblog.config.security
 
+import com.example.simpleblog.config.BlogConfig
+import com.example.simpleblog.domain.InMemoryRepository
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.CookieProvider.CookieName
@@ -22,6 +24,8 @@ import java.util.concurrent.TimeUnit
  * Created by mskwon on 2024/01/13.
  */
 class CustomUserNameAuthenticationFilter(
+    private val memoryRepository: InMemoryRepository,
+    private val blogConfig: BlogConfig = BlogConfig()
 ) : UsernamePasswordAuthenticationFilter() {
 
     private val log = KotlinLogging.logger {  }
@@ -55,11 +59,13 @@ class CustomUserNameAuthenticationFilter(
         val refreshCookie = CookieProvider.createCookie(
             CookieName.REFRESH_COOKIE,
             refreshToken,
-            TimeUnit.DAYS.toSeconds(jwtAuthenticationProvider.refreshTokenExpireDay),
+            blogConfig.jwt.refreshTokenExpire.toSeconds(),
         )
         response?.addHeader(AUTHORIZATION, "Bearer $accessToken")
         // 모든 브라우저에서 거부되지 않도록 sameSite=Strict/Lax/None; Secure로 설정되지 않은 경우 Set-Cookie 속성으로 Header에 쿠키를 추가
         response?.addHeader(SET_COOKIE, refreshCookie.toString())
+        memoryRepository.save(refreshToken, principalDetails)
+
         responseData(response, JsonUtils.toMapperJson(CommonResDto(HttpStatus.OK, "login success", principalDetails.member)))
     }
 }

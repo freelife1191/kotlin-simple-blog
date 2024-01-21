@@ -22,7 +22,7 @@ class PostControllerTest : BaseRestControllerTest() {
 
     @Test
     fun posts() {
-        val result = mockMvc.get("/posts") {
+        val result = mockMvc.get("/v1/posts") {
             param("page","0")
             param("size","10")
         }
@@ -40,7 +40,7 @@ class PostControllerTest : BaseRestControllerTest() {
 
     @Test
     fun findById() {
-        val result = mockMvc.get("/post/{id}",1) {}
+        val result = mockMvc.get("/v1/post/{id}",1) {}
             .andExpect {
                 status { isOk() }
             }
@@ -55,7 +55,7 @@ class PostControllerTest : BaseRestControllerTest() {
 
     @Test
     fun deleteById() {
-        val result = mockMvc.delete("/post/{id}",1) {}
+        val result = mockMvc.delete("/v1/post/{id}",1) {}
             .andExpect {
                 status { isOk() }
             }
@@ -70,7 +70,7 @@ class PostControllerTest : BaseRestControllerTest() {
 
     @Test
     fun save() {
-        val result = mockMvc.post("/post") {
+        val result = mockMvc.post("/v1/post") {
             jsonContent(
                 PostSaveReq(
                     title = "ok", content = "ok content", memberId = 1
@@ -91,7 +91,7 @@ class PostControllerTest : BaseRestControllerTest() {
 
     @Test
     fun saveError() {
-        mockMvc.post("/post") {
+        mockMvc.post("/v1/post") {
             jsonContent(
                 PostSaveReq(
                     title = null,

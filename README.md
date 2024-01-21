@@ -28,7 +28,7 @@
 - [X] blog 24. accessToken 재발급
 - [X] blog 25. Currying function in Kotlin
 - [X] blog 26. Bean static method Access, 회원가입 처리
-- [ ] blog 27. InMemoryDB 동시성 테스트
+- [X] blog 27. InMemoryDB 동시성 테스트
 - [ ] blog 28. Embedded Redis 셋팅
 - [ ] blog 29. Kotlin JDSL Dynamic Query
 - [ ] blog 30. @DataJpaTest with Kotlin JDSL
@@ -226,4 +226,9 @@ front: react + typescript + zustand
 ## blog 26. Bean static method Access, 회원가입 처리
 - 회원가입 서비스 AuthService로 이동
 - rawPassword encode 처리를 위해 BeanAccessor 추가
-- 
+
+## blog 27. InMemoryDB 동시성 테스트
+- InMemoryDB 동시성 테스트
+- jwt expire 설정값 application.yml 설정으로 변경
+- 유효기간을 가지면서 동시성을 지원해주는 HashMap 라이브러리(`expiringmap`) 추가
+- ExpireMap을 활용한 RefreshToken 관리

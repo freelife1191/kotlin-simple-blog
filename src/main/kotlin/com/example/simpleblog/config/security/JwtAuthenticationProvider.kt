@@ -5,6 +5,7 @@ import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.auth0.jwt.exceptions.JWTVerificationException
 import com.auth0.jwt.interfaces.DecodedJWT
+import com.example.simpleblog.config.BlogConfig
 import mu.KotlinLogging
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -14,8 +15,7 @@ import java.util.concurrent.TimeUnit
  * Created by mskwon on 2024/01/13.
  */
 class JwtAuthenticationProvider(
-    val accessTokenExpireSecond: Long = 300, // 5분
-    val refreshTokenExpireDay: Long = 7 // 7일
+    private val blogConfig: BlogConfig = BlogConfig()
 ) {
     private val log = KotlinLogging.logger {  }
     private val accessSecretKey: String = "accessSimpleblog"
@@ -24,16 +24,16 @@ class JwtAuthenticationProvider(
     val claimPrincipal = "principal"
     private val jwtSubject = "my-token"
 
-    fun generateRefreshToken(principal: String): String {
-        val expireDate = Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(refreshTokenExpireDay))
-        log.info { "refreshToken ExpireDate=>$expireDate" }
-        return doGenerateToken(expireDate, principal, refreshSecretKey)
-    }
-
     fun generateAccessToken(principal: String): String {
-        val expireDate = Date(System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(accessTokenExpireSecond))
+        val expireDate = Date(System.currentTimeMillis() + blogConfig.jwt.accessTokenExpire.toMillis())
         log.info { "accessToken ExpireDate=>$expireDate" }
         return doGenerateToken(expireDate, principal, accessSecretKey)
+    }
+
+    fun generateRefreshToken(principal: String): String {
+        val expireDate = Date(System.currentTimeMillis() + blogConfig.jwt.refreshTokenExpire.toMillis())
+        log.info { "refreshToken ExpireDate=>$expireDate" }
+        return doGenerateToken(expireDate, principal, refreshSecretKey)
     }
 
     private fun doGenerateToken(expireDate: Date, principal: String, secretKey: String) =
