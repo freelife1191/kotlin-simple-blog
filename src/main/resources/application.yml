@@ -6,6 +6,8 @@ server:
       charset: UTF-8
       enabled: true
 spring:
+  profiles:
+    active: local
   main:
     allow-bean-definition-overriding: true
   #output:

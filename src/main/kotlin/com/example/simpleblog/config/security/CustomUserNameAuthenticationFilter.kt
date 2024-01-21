@@ -64,7 +64,7 @@ class CustomUserNameAuthenticationFilter(
         response?.addHeader(AUTHORIZATION, "Bearer $accessToken")
         // 모든 브라우저에서 거부되지 않도록 sameSite=Strict/Lax/None; Secure로 설정되지 않은 경우 Set-Cookie 속성으로 Header에 쿠키를 추가
         response?.addHeader(SET_COOKIE, refreshCookie.toString())
-        memoryRepository.save(refreshToken, principalDetails)
+        memoryRepository.save(refreshToken, JsonUtils.toMapperJson(principalDetails))
 
         responseData(response, JsonUtils.toMapperJson(CommonResDto(HttpStatus.OK, "login success", principalDetails.member)))
     }

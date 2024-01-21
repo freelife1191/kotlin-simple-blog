@@ -3,6 +3,7 @@ package com.example.simpleblog.api
 import com.example.simpleblog.domain.post.PostRes
 import com.example.simpleblog.domain.post.PostSaveReq
 import com.example.simpleblog.service.PostService
+import com.example.simpleblog.util.dto.SearchCondition
 import com.example.simpleblog.util.value.CommonResDto
 import jakarta.validation.Valid
 import org.springframework.data.domain.Page
@@ -20,8 +21,9 @@ class PostController (
     private val postService: PostService
 ) {
     @GetMapping("/posts")
-    fun findPosts(@PageableDefault(size = 10) pageable: Pageable): CommonResDto<Page<PostRes>> =
-        CommonResDto(OK, "find posts", postService.findPosts(pageable))
+    fun findPosts(@PageableDefault(size = 10) pageable: Pageable,
+                  searchCondition: SearchCondition): CommonResDto<Page<PostRes>> =
+        CommonResDto(OK, "find posts", postService.findPosts(pageable, searchCondition))
 
     @GetMapping("/post/{id}")
     fun findById(@PathVariable id: Long): CommonResDto<PostRes> =

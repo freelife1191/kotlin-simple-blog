@@ -49,9 +49,10 @@ class CustomBasicAuthenticationFilter(
                 }
                 // val principalString = jwtAuthenticationProvider.getPrincipalStringByAccessToken(refreshToken)
                 // val details = JsonUtils.toMapperObject(principalString, PrincipalDetails::class)
-                val details = memoryRepository.findByKey(refreshToken) as PrincipalDetails
-                reissueAccessToken(details, response)
-                setAuthentication(details, chain, request, response)
+                val jsonDetail = memoryRepository.findByKey(refreshToken) as String
+                val principalDetails = JsonUtils.toMapperObject(jsonDetail, PrincipalDetails::class)
+                reissueAccessToken(principalDetails, response)
+                setAuthentication(principalDetails, chain, request, response)
             }
             return
         }
