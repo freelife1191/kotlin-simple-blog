@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.*
  * Created by mskwon on 2023/07/03.
  */
 @RestController
-@RequestMapping("/v1")
 class PostController (
     private val postService: PostService
 ) {

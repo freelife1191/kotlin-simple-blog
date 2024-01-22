@@ -32,7 +32,7 @@
 - [X] blog 28. Embedded Redis 셋팅
 - [X] blog 29. Kotlin JDSL Dynamic Query
 - [X] blog 30. @DataJpaTest with Kotlin JDSL
-- [ ] blog 31. 요청 url/응답 DTO 공통관심사 분리
+- [X] blog 31. 요청 url/응답 DTO 공통관심사 분리
 - [ ] blog 32. MDC Logging Filter
 - [ ] blog 33. File Uploader with LocalFolder
 - [ ] blog 34. File Uploader with LocalFolder 2
@@ -244,3 +244,14 @@ front: react + typescript + zustand
 ## blog 30. @DataJpaTest with Kotlin JDSL
 - searchCondition 조건으로 조회하는 Dynamic Query 추가
 - Kotlin JDSL 적용 및 테스트
+
+## blog 31. 요청 url/응답 DTO 공통관심사 분리
+- 공통 관심사 분리 interceptor, filter, aop
+  - aop: 로직의 시간측정, 트랜잭션 관리, 특정 클래스나 패키지 별로 처리가 가능
+  - filter: 공통된 보안/인가(SpringSecurity) 처리, 이미지와 데이터, 문자열 인코딩, 모든 요청에 대한 로깅
+    - 스프링과 좀 분리가 되어야 하는 기능들에 대해서 필터 처리
+  - interceptor: Spring Container에 있는 것들만 Target으로 함, filter 같은 경우에는 Spring Container에서 동작하는 것이니까 결국 모든 요청을 앞단에서 받을 수 있음 
+    - 모든 요청에 대한 로깅, 세부적인 보안 및 인증 인가 처리
+    - 컨트롤러로 넘기는 데이터를 가공, Response Stream을 건드릴 수는 없음
+- API 버전 관심사 분리
+- API 응답시 resultMsg에 API 버전을 추가

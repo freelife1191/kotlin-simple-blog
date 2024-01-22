@@ -7,6 +7,10 @@ import org.springframework.http.HttpStatus
  */
 data class CommonResDto<T>(
     val resultCode: HttpStatus,
-    val resultMsg: String,
+    var resultMsg: String,
     val data: T
-)
+) {
+    fun reflectVersion(apiVersion: String) {
+        this.resultMsg = "version: $apiVersion / ${this.resultMsg}"
+    }
+}
