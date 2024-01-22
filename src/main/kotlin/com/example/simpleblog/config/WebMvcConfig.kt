@@ -17,9 +17,8 @@ class WebMvcConfig (
 }
 
 class StringToEnumConverter: Converter<String, SearchType> {
-    override fun convert(source: String): SearchType? {
+    override fun convert(source: String): SearchType {
         println("source==>$source")
         return SearchType.valueOf(source.uppercase())
     }
-
 }

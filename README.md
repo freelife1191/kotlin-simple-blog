@@ -31,7 +31,7 @@
 - [X] blog 27. InMemoryDB 동시성 테스트
 - [X] blog 28. Embedded Redis 셋팅
 - [X] blog 29. Kotlin JDSL Dynamic Query
-- [ ] blog 30. @DataJpaTest with Kotlin JDSL
+- [X] blog 30. @DataJpaTest with Kotlin JDSL
 - [ ] blog 31. 요청 url/응답 DTO 공통관심사 분리
 - [ ] blog 32. MDC Logging Filter
 - [ ] blog 33. File Uploader with LocalFolder
@@ -240,3 +240,7 @@ front: react + typescript + zustand
 ## blog 29. Kotlin JDSL Dynamic Query
 - refreshToken 저장시 JsonString으로 변환하여 저장하여 로그인 오류 해결
 - Kotlin JDSL Dynamic Query 적용
+
+## blog 30. @DataJpaTest with Kotlin JDSL
+- searchCondition 조건으로 조회하는 Dynamic Query 추가
+- Kotlin JDSL 적용 및 테스트

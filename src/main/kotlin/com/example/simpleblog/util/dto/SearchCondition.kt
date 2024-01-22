@@ -16,7 +16,7 @@ enum class SearchType {
 
     companion object {
         @JsonCreator
-        fun from(searchType: String?): SearchType? {
+        fun from(searchType: String?): SearchType {
             return SearchType.valueOf(searchType?.uppercase().toString())
         }
     }

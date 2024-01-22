@@ -3,6 +3,7 @@ package com.example.simpleblog.domain.post
 import com.example.simpleblog.util.dto.SearchCondition
 import com.example.simpleblog.util.func.dynamicQuery
 import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
+import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.querydsl.from.fetch
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
@@ -27,7 +28,6 @@ interface PostCustomRepository {
 class PostCustomRepositoryImpl (
     private val queryFactory: SpringDataQueryFactory
 ): PostCustomRepository {
-    val log = KotlinLogging.logger {  }
     override fun findPosts(pageable: Pageable, searchCondition: SearchCondition): Page<Post> {
         val results = queryFactory.listQuery<Post> {
             select(entity(Post::class))
@@ -44,10 +44,13 @@ class PostCustomRepositoryImpl (
         val countQuery = queryFactory.listQuery<Post> {
             select(entity(Post::class))
             from(entity(Post::class))
+            where(
+                dynamicQuery(searchCondition)
+            )
         }
 
         return PageableExecutionUtils.getPage(results, pageable) {
-            countQuery.size.toLong();
+            countQuery.size.toLong()
         }
     }
 }
