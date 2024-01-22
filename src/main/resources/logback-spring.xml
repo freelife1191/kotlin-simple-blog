@@ -15,7 +15,7 @@
         <!--<withJansi>true</withJansi>-->
         <encoder>
             <!--<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>-->
-            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <pattern>[%X{request_id:-startup}] ${CONSOLE_LOG_PATTERN}</pattern>
             <charset>${CONSOLE_LOG_CHARSET}</charset>
         </encoder>
     </appender>

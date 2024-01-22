@@ -33,7 +33,7 @@
 - [X] blog 29. Kotlin JDSL Dynamic Query
 - [X] blog 30. @DataJpaTest with Kotlin JDSL
 - [X] blog 31. 요청 url/응답 DTO 공통관심사 분리
-- [ ] blog 32. MDC Logging Filter
+- [X] blog 32. MDC Logging Filter
 - [ ] blog 33. File Uploader with LocalFolder
 - [ ] blog 34. File Uploader with LocalFolder 2
 - [ ] blog 35. Custom JsonSerializer
@@ -255,3 +255,7 @@ front: react + typescript + zustand
     - 컨트롤러로 넘기는 데이터를 가공, Response Stream을 건드릴 수는 없음
 - API 버전 관심사 분리
 - API 응답시 resultMsg에 API 버전을 추가
+
+## blog 32. MDC Logging Filter
+- 추적용 로깅 필터 추가
+  - Filter에서 사용자별 고유한 UUID를 생성하여 로그를 추적할 수 있음 

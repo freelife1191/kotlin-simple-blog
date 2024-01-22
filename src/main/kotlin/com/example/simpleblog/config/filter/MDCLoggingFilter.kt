@@ -6,16 +6,19 @@ import jakarta.servlet.ServletRequest
 import jakarta.servlet.ServletResponse
 import jakarta.servlet.http.HttpServletRequest
 import mu.KotlinLogging
+import org.slf4j.MDC
+import java.util.*
 
 /**
  * Created by mskwon on 2024/01/12.
  */
-class MyAuthenticationFilter : Filter {
+class MDCLoggingFilter : Filter {
 
     val log = KotlinLogging.logger { }
-    override fun doFilter(request: ServletRequest?, response: ServletResponse?, chain: FilterChain?) {
-        val serverRequest = request as HttpServletRequest
-        serverRequest.session.getAttribute("principal") ?: throw RuntimeException("session not found!!")
-        chain?.doFilter(request, response)
+    override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
+        val uuid = UUID.randomUUID()
+        MDC.put("request_id", uuid.toString())
+        chain.doFilter(request, response)
+        MDC.clear()
     }
 }
