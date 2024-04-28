@@ -17,7 +17,7 @@ files/
 *.gz
 script/mariadb/data
 script/mariadb/initdb.d
-
+logback.log
 
 ### STS ###
 .apt_generated

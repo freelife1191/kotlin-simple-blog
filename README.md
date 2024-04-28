@@ -34,7 +34,7 @@
 - [X] blog 30. @DataJpaTest with Kotlin JDSL
 - [X] blog 31. 요청 url/응답 DTO 공통관심사 분리
 - [X] blog 32. MDC Logging Filter
-- [ ] blog 33. File Uploader with LocalFolder
+- [X] blog 33. File Uploader with LocalFolder
 - [ ] blog 34. File Uploader with LocalFolder 2
 - [ ] blog 35. Custom JsonSerializer
 - [ ] blog 36. Embedded S3 Config
@@ -258,4 +258,9 @@ front: react + typescript + zustand
 
 ## blog 32. MDC Logging Filter
 - 추적용 로깅 필터 추가
-  - Filter에서 사용자별 고유한 UUID를 생성하여 로그를 추적할 수 있음 
+  - Filter에서 사용자별 고유한 UUID를 생성하여 로그를 추적할 수 있음
+
+## blog 33. File Uploader with LocalFolder
+- 파일 업로드 서비스 추가
+- 파일 업로드 테스트 코드 추가
+- 패키지 명 수정 api -> web

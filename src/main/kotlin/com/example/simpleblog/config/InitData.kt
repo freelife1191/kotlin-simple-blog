@@ -1,17 +1,18 @@
 package com.example.simpleblog.config
 
 import com.example.simpleblog.domain.comment.CommentRepository
-import com.example.simpleblog.domain.member.*
+import com.example.simpleblog.domain.member.LoginDto
+import com.example.simpleblog.domain.member.Member
+import com.example.simpleblog.domain.member.MemberRepository
+import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.domain.post.Post
 import com.example.simpleblog.domain.post.PostRepository
 import com.example.simpleblog.domain.post.PostSaveReq
-import com.example.simpleblog.domain.post.toEntity
 import io.github.serpro69.kfaker.faker
 import mu.KotlinLogging
 import org.springframework.boot.context.event.ApplicationReadyEvent
 import org.springframework.context.annotation.Configuration
 import org.springframework.context.event.EventListener
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 
 /**
  * Created by mskwon on 2023/07/15.

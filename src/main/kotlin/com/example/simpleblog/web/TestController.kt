@@ -1,4 +1,4 @@
-package com.example.simpleblog.api
+package com.example.simpleblog.web
 
 import com.example.simpleblog.util.dto.SearchCondition
 import com.example.simpleblog.util.dto.SearchType

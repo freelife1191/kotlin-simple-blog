@@ -1,4 +1,4 @@
-package com.example.simpleblog.api
+package com.example.simpleblog.web
 
 import com.example.simpleblog.domain.post.PostRes
 import com.example.simpleblog.domain.post.PostSaveReq
@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.http.HttpStatus.OK
 import org.springframework.web.bind.annotation.*
+import org.springframework.web.multipart.MultipartFile
 
 /**
  * Created by mskwon on 2023/07/03.
@@ -35,4 +36,8 @@ class PostController (
     @PostMapping("/post")
     fun save(@RequestBody @Valid dto: PostSaveReq): CommonResDto<PostRes> =
         CommonResDto(OK, "save post", postService.savePost(dto))
+
+    @PostMapping("/post/img")
+    fun savePostImg(image: MultipartFile): CommonResDto<Unit> =
+        CommonResDto(OK, "save post img", postService.savePostImg(image))
 }

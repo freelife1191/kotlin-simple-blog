@@ -1,4 +1,4 @@
-package com.example.simpleblog.api
+package com.example.simpleblog.web
 
 import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.domain.member.MemberRes
