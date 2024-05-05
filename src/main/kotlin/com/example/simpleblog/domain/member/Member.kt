@@ -20,14 +20,13 @@ class Member (
 ): BaseEntity() {
 
     fun toDto(): MemberRes {
-        return MemberRes(
-            id = this.id!!,
+        val dto = MemberRes(
             email = this.email,
             password = this.password,
             role = this.role,
-            createdAt = this.createdAt,
-            updatedAt = this.updatedAt
         )
+        setBaseDtoProperty(dto)
+        return dto
     }
 
     override fun toString(): String {

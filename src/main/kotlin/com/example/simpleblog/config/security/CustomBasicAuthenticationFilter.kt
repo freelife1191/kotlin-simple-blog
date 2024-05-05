@@ -43,6 +43,7 @@ class CustomBasicAuthenticationFilter(
             handleTokenException(accessTokenResult) {
                 log.info { "getClass==>${accessTokenResult.exception.javaClass}" }
                 val refreshToken = CookieProvider.getCookie(request, CookieProvider.CookieName.REFRESH_COOKIE).orElseThrow()
+                log.debug { "refresh token: $refreshToken" }
                 val refreshTokenResult = jwtAuthenticationProvider.validRefreshToken(refreshToken)
                 if (refreshTokenResult is TokenValidResult.Failure) {
                     throw RuntimeException("Invalid RefreshToken")

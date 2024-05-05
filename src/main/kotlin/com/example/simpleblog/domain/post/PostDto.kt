@@ -1,5 +1,6 @@
 package com.example.simpleblog.domain.post
 
+import com.example.simpleblog.domain.BaseDto
 import com.example.simpleblog.domain.member.Member
 import com.example.simpleblog.domain.member.MemberRes
 import jakarta.validation.constraints.NotNull
@@ -25,8 +26,7 @@ data class PostSaveReq(
 }
 
 data class PostRes(
-    val id: Long,
     val title: String,
     val content: String,
     val member: MemberRes
-)
+): BaseDto()
