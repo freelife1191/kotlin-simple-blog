@@ -6,7 +6,7 @@ import com.example.simpleblog.domain.member.LoginDto
 import com.example.simpleblog.util.CookieProvider
 import com.example.simpleblog.util.CookieProvider.CookieName
 import com.example.simpleblog.util.JsonUtils
-import com.example.simpleblog.util.func.responseData
+import com.example.simpleblog.util.Script.responseData
 import com.example.simpleblog.util.value.CommonResDto
 import jakarta.servlet.FilterChain
 import jakarta.servlet.http.HttpServletRequest
@@ -18,7 +18,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken
 import org.springframework.security.core.Authentication
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
-import java.util.concurrent.TimeUnit
 
 /**
  * Created by mskwon on 2024/01/13.

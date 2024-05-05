@@ -5,7 +5,7 @@ import com.example.simpleblog.domain.InMemoryRepository
 import com.example.simpleblog.domain.RedisRepositoryImpl
 import com.example.simpleblog.domain.member.Role
 import com.example.simpleblog.util.JsonUtils
-import com.example.simpleblog.util.func.responseData
+import com.example.simpleblog.util.Script.responseData
 import com.example.simpleblog.util.value.CommonResDto
 import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse

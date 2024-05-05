@@ -3,11 +3,12 @@ package com.example.simpleblog.service.common
 import com.example.simpleblog.config.aop.CustomAopObject
 import jakarta.annotation.PostConstruct
 import org.springframework.stereotype.Service
+import org.springframework.util.ResourceUtils
 import org.springframework.web.multipart.MultipartFile
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.Paths
-import kotlin.io.path.Path
+import java.util.*
 
 /**
  * Created by mskwon on 4/28/24.
@@ -30,7 +31,18 @@ class LocalFileUploaderServiceImpl(
         }
     }
 
-    override fun upload(file: MultipartFile) {
-        Files.write(Path(localImgFolderPath + "/" + file.originalFilename), file.bytes)
+    override fun upload(file: MultipartFile): String {
+
+        val uuid = UUID.randomUUID().toString()
+        val fileName = uuid + "_" + file.originalFilename
+        val imgFilePath = Paths.get("$localImgFolderPath/$fileName")
+
+        Files.write(imgFilePath, file.bytes)
+
+        val url = ResourceUtils.getURL(imgFilePath.toString())
+
+        log.info { "url==>$url" }
+
+        return url.toString()
     }
 }

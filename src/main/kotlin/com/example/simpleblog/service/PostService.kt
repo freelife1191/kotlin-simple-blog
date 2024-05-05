@@ -40,7 +40,7 @@ class PostService(
         return postRepository.findById(id).orElseThrow().toDto();
     }
 
-    fun savePostImg(image: MultipartFile) {
-        localFileUploaderService.upload(image)
+    fun savePostImg(image: MultipartFile): String {
+        return localFileUploaderService.upload(image)
     }
 }

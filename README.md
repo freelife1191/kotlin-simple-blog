@@ -35,7 +35,7 @@
 - [X] blog 31. 요청 url/응답 DTO 공통관심사 분리
 - [X] blog 32. MDC Logging Filter
 - [X] blog 33. File Uploader with LocalFolder
-- [ ] blog 34. File Uploader with LocalFolder 2
+- [X] blog 34. File Uploader with LocalFolder 2
 - [ ] blog 35. Custom JsonSerializer
 - [ ] blog 36. Embedded S3 Config
 - [ ] blog 37. 계층형 댓글 설계 - 1
@@ -264,3 +264,9 @@ front: react + typescript + zustand
 - 파일 업로드 서비스 추가
 - 파일 업로드 테스트 코드 추가
 - 패키지 명 수정 api -> web
+
+## blog 34. File Uploader with LocalFolder 2
+- 파일 업로드시 파일명 UUID 로 저장되도록 수정
+- 스크립트 코드 정리
+- 파일 업로드 후 이미지 URL 응답 추가
+- member 생성일, 수정일 응답 포맷 설정

@@ -38,6 +38,6 @@ class PostController (
         CommonResDto(OK, "save post", postService.savePost(dto))
 
     @PostMapping("/post/img")
-    fun savePostImg(image: MultipartFile): CommonResDto<Unit> =
+    fun savePostImg(image: MultipartFile): CommonResDto<String> =
         CommonResDto(OK, "save post img", postService.savePostImg(image))
 }
