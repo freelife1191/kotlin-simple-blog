@@ -16,6 +16,7 @@ import lombok.ToString
 @ToString
 @Table(name = "comment_closure")
 class CommentClosure(
+    override var id: Long,
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_ancestor", nullable = true)
     var idAncestor:Comment?,
@@ -24,4 +25,4 @@ class CommentClosure(
     var idDescendant:Comment,
     @Column(name = "depth")
     var depth:Int,
-): BaseEntity()
+): BaseEntity(id)

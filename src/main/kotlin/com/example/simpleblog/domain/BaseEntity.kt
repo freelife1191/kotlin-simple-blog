@@ -1,7 +1,5 @@
 package com.example.simpleblog.domain
 
-import com.example.simpleblog.domain.post.PostRes
-import com.fasterxml.jackson.annotation.JsonFormat
 import jakarta.persistence.*
 import org.springframework.data.annotation.CreatedDate
 import org.springframework.data.annotation.LastModifiedDate
@@ -14,12 +12,13 @@ import java.time.LocalDateTime
 @EntityListeners(value = [AuditingEntityListener::class])
 @MappedSuperclass
 abstract class BaseEntity (
+    override var id: Long = 0,
     @Column(nullable = false, updatable = false)
     @CreatedDate var createdAt: LocalDateTime = LocalDateTime.now(),
     @LastModifiedDate var updatedAt: LocalDateTime = LocalDateTime.now()
-): BaseEntityId() {
+): BaseEntityId(id) {
     protected fun setBaseDtoProperty(dto: BaseDto) {
-        dto.id = this.id!!
+        dto.id = this.id
         dto.createdAt = this.createdAt
         dto.updatedAt = this.updatedAt
     }
@@ -30,5 +29,5 @@ abstract class BaseEntity (
 abstract class BaseEntityId (
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    open var id: Long? = null
+    open var id: Long
 )

@@ -16,6 +16,7 @@ import lombok.ToString
 @ToString
 @Table(name = "comment")
 class Comment (
+    override var id: Long = 0,
     @Column(name = "content", nullable = false, length = 1000)
     var content: String,
 
@@ -24,7 +25,7 @@ class Comment (
 
     @ManyToOne(fetch = FetchType.LAZY, targetEntity = Member::class)
     var member: Member
-): BaseEntity() {
+): BaseEntity(id) {
     override fun toString(): String {
         return "Comment(id=$id, content='$content', post=$post, member=$member)"
     }

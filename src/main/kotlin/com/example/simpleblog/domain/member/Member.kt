@@ -10,14 +10,14 @@ import java.time.LocalDateTime
 @Entity
 @Table(name = "member")
 class Member (
-    override var id: Long?,
+    override var id: Long = 0,
     @Column(name = "email", nullable = false)
     var email: String,
     @Column(name = "password")
     var password: String,
     @Enumerated(EnumType.STRING)
     var role: Role = Role.USER
-): BaseEntity() {
+): BaseEntity(id) {
 
     fun toDto(): MemberRes {
         val dto = MemberRes(

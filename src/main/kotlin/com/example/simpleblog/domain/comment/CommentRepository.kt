@@ -18,7 +18,7 @@ import org.springframework.util.Assert
  */
 interface CommentRepository {
     fun saveComment(comment: Comment): Comment
-    fun saveCommentClosure(idDescendant: Long?, idAncestor: Long?)
+    fun saveCommentClosure(idDescendant: Long, idAncestor: Long?): Int
     fun findComments(pageable: Pageable): Page<Comment>
 }
 
@@ -37,16 +37,17 @@ class CommentRepositoryImpl (
         }
     }
 
-    override fun saveCommentClosure(idDescendant: Long?, idAncestor: Long?) {
+    override fun saveCommentClosure(idDescendant: Long, idAncestor: Long?): Int {
+        var executeCount = 0
         val sql = """
             INSERT INTO comment_closure
             (id_ancestor, id_descendant, depth, updated_at, created_at)
             VALUES
             ($idAncestor, $idDescendant, 0, now(), now())
         """.trimIndent()
-        em.createNativeQuery(sql).executeUpdate()
+        executeCount += em.createNativeQuery(sql).executeUpdate()
         if (idAncestor != null) {
-            em.createNativeQuery("""
+            executeCount += em.createNativeQuery("""
                 INSERT INTO comment_closure
                 (id_ancestor, id_descendant, depth, updated_at, created_at)
                 SELECT
@@ -57,8 +58,10 @@ class CommentRepositoryImpl (
                     c.created_at
                 FROM comment_closure as cc, comment_closure as c
                 WHERE c.id_ancestor = $idAncestor AND cc.id_descendant = $idDescendant
-            """.trimIndent())
+            """.trimIndent()).executeUpdate()
         }
+
+        return executeCount
     }
 
     override fun findComments(pageable: Pageable): Page<Comment> {
