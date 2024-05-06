@@ -11,7 +11,11 @@ spring:
       on-profile: test
   main:
     allow-bean-definition-overriding: true
-  #output:
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+    #output:
   #  ansi:
       #https://stackoverflow.com/questions/27843562/how-to-configure-logback-in-spring-boot-for-ansi-color-feature:
   #    enabled: always
@@ -62,7 +66,7 @@ spring:
   data:
     redis:
       host: localhost
-      port: 16379
+      port: 26379
       client-type: lettuce
 # p6spy JPA Query Log Format
 decorator:

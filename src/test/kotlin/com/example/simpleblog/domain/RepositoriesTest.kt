@@ -1,6 +1,8 @@
 package com.example.simpleblog.domain
 
 import com.example.simpleblog.config.P6spyPrettySqlFormatter
+import com.example.simpleblog.domain.comment.CommentRepository
+import com.example.simpleblog.domain.comment.CommentRepositoryImpl
 import com.example.simpleblog.domain.post.PostRepository
 import com.example.simpleblog.util.dto.SearchCondition
 import com.example.simpleblog.util.dto.SearchType
@@ -35,10 +37,20 @@ class RepositoriesTest {
 
     @Autowired
     private lateinit var postRepository: PostRepository
+    @Autowired
+    private lateinit var commentRepository: CommentRepository
 
     @Test
     fun setupTest() {
         log.info { "setUp!!" }
+    }
+
+    @Test
+    fun findCommentByAncestorCommentTest() {
+        val byAncestorComment = commentRepository.findCommonByAncestorComment(3)
+        for (comment in byAncestorComment) {
+            log.info { comment }
+        }
     }
 
     @Test
@@ -65,6 +77,11 @@ class RepositoriesTest {
         @Autowired
         private val em: EntityManager
     ) {
+        @Bean
+        fun commentRepository(): CommentRepository {
+            return CommentRepositoryImpl(springDataQueryFactory(), em)
+        }
+
         @Bean
         fun springDataQueryFactory(): SpringDataQueryFactory {
             P6SpyOptions.getActiveInstance().logMessageFormat = P6spyPrettySqlFormatter::class.java.name

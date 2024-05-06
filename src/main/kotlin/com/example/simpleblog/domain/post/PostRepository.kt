@@ -24,7 +24,6 @@ interface PostCustomRepository {
     fun findPosts(pageable: Pageable, searchCondition: SearchCondition): Page<Post>
 }
 
-@Repository
 class PostCustomRepositoryImpl (
     private val queryFactory: SpringDataQueryFactory
 ): PostCustomRepository {

@@ -2,6 +2,7 @@ package com.example.simpleblog.service
 
 import com.example.simpleblog.domain.comment.Comment
 import com.example.simpleblog.domain.comment.CommentRepository
+import com.example.simpleblog.domain.comment.CommentRes
 import com.example.simpleblog.domain.comment.CommentSaveReq
 import com.example.simpleblog.domain.post.PostRepository
 import com.example.simpleblog.exception.PostNotFoundException
@@ -20,10 +21,15 @@ class CommentService(
     private val log = KotlinLogging.logger {}
 
     @Transactional
-    fun saveComment(dto: CommentSaveReq): Comment {
+    fun saveComment(dto: CommentSaveReq): CommentRes {
         val post = postRepository.findById(dto.postId).orElseThrow{ throw PostNotFoundException(dto.postId) }
         val comment: Comment = commentRepository.saveComment(dto.toEntity(post = post))
         commentRepository.saveCommentClosure(comment.id, dto.idAncestor)
-        return comment
+        return comment.toDto()
+    }
+
+    @Transactional(readOnly = true)
+    fun findCommentByAncestorComment(idAncestor: Long): List<CommentRes> {
+        return commentRepository.findCommonByAncestorComment(idAncestor).map { it.toDto() }
     }
 }

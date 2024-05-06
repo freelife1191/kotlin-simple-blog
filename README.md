@@ -40,7 +40,7 @@
 - [X] blog 36. Embedded S3 Config
 - [X] blog 37. 계층형 댓글 설계 - 1
 - [X] blog 38. Service Layer Test With Mockito
-- [ ] blog 39. 계층형 댓글 설계 - 2
+- [X] blog 39. 계층형 댓글 설계 - 2
 - [ ] blog 40. Redis를 활용한 검색어 자동완성 API
 - [ ] blog 41. Caffeine cache 적용
 - [ ] blog 42. Custom JsonDeserializer
@@ -286,3 +286,10 @@ front: react + typescript + zustand
 
 ## blog 38. Service Layer Test With Mockito
 - Mockito 테스트 코드 작성 및 테스트
+
+## blog 39. 계층형 댓글 설계 - 2
+- 계층형 댓글 코드 작성 및 테스트
+- 참고(Closure Table)
+  - https://wildeveloperetrain.tistory.com/150
+  - https://github.com/line/kotlin-jdsl
+  - https://kotlin-jdsl.gitbook.io/docs

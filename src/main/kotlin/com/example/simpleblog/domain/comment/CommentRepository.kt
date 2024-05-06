@@ -1,17 +1,17 @@
 package com.example.simpleblog.domain.comment
 
-import com.example.simpleblog.domain.member.Member
 import com.linecorp.kotlinjdsl.query.spec.ExpressionOrderSpec
+import com.linecorp.kotlinjdsl.querydsl.expression.col
 import com.linecorp.kotlinjdsl.querydsl.expression.column
 import com.linecorp.kotlinjdsl.spring.data.SpringDataQueryFactory
 import com.linecorp.kotlinjdsl.spring.data.listQuery
 import jakarta.persistence.EntityManager
 import org.springframework.data.domain.Page
 import org.springframework.data.domain.Pageable
-import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Repository
 import org.springframework.util.Assert
+import kotlin.reflect.KProperty1
 
 /**
  * Created by mskwon on 2023/08/17.
@@ -20,6 +20,7 @@ interface CommentRepository {
     fun saveComment(comment: Comment): Comment
     fun saveCommentClosure(idDescendant: Long, idAncestor: Long?): Int
     fun findComments(pageable: Pageable): Page<Comment>
+    fun findCommonByAncestorComment(idAncestor: Long): List<Comment>
 }
 
 @Repository
@@ -41,7 +42,7 @@ class CommentRepositoryImpl (
         var executeCount = 0
         val sql = """
             INSERT INTO comment_closure
-            (id_ancestor, id_descendant, depth, updated_at, created_at)
+            (id_ancestor, id_descendant, depth, updatedAt, createdAt)
             VALUES
             ($idAncestor, $idDescendant, 0, now(), now())
         """.trimIndent()
@@ -49,15 +50,15 @@ class CommentRepositoryImpl (
         if (idAncestor != null) {
             executeCount += em.createNativeQuery("""
                 INSERT INTO comment_closure
-                (id_ancestor, id_descendant, depth, updated_at, created_at)
+                (idAncestor, idAescendant, depth, updatedAt, createdAt)
                 SELECT
                     cc.id_ancestor,
                     c.id_descendant,
                     cc.depth + c.depth + 1,
-                    c.updated_at,
-                    c.created_at
+                    c.updatedAt,
+                    c.createdAt
                 FROM comment_closure as cc, comment_closure as c
-                WHERE c.id_ancestor = $idAncestor AND cc.id_descendant = $idDescendant
+                WHERE cc.id_descendant = $idAncestor AND c.id_ancestor = $idDescendant  
             """.trimIndent()).executeUpdate()
         }
 
@@ -83,4 +84,17 @@ class CommentRepositoryImpl (
         }
     }
 
+    override fun findCommonByAncestorComment(idAncestor: Long): List<Comment> {
+        return queryFactory.listQuery<Comment> {
+            select(entity(Comment::class))
+            from(entity(Comment::class))
+            join(
+                entity(CommentClosure::class),
+                on(entity(Comment::class).equal(column(CommentClosure::idDescendant)))
+            )
+            where(
+                nestedCol(col(CommentClosure::idAncestor as KProperty1<CommentClosure, Comment>), Comment::id).equal(idAncestor)
+            )
+        }
+    }
 }

@@ -17,12 +17,12 @@ import lombok.ToString
 @Table(name = "comment_closure")
 class CommentClosure(
     override var id: Long,
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(fetch = FetchType.LAZY, optional = true)
     @JoinColumn(name = "id_ancestor", nullable = true)
-    var idAncestor:Comment?,
+    var idAncestor: Comment?,
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "id_descendant", nullable = true)
-    var idDescendant:Comment,
+    var idDescendant: Comment,
     @Column(name = "depth")
-    var depth:Int,
+    var depth: Int,
 ): BaseEntity(id)
