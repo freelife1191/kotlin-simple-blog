@@ -39,10 +39,12 @@ val snippetsDir by extra { file("build/generated-snippets") }
 val koTestVersion by extra { "5.8.0" }
 val kotestExtVersion by extra { "1.1.3" }
 extra["springCloudVersion"] = "2023.0.0"
+extra["ioAwspringCloudVersion"] = "2.4.4"
 
 dependencyManagement {
     imports {
         mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom("io.awspring.cloud:spring-cloud-aws-dependencies:${property("ioAwspringCloudVersion")}")
     }
 }
 
@@ -106,8 +108,14 @@ dependencies {
     // 유효기간을 가지면서 동시성을 지원해주는 HashMap 라이브러리
     implementation("net.jodah:expiringmap:0.5.11")
     // Embedded Redis
-    implementation("com.github.codemonstur:embedded-redis:1.3.0")
+    implementation("com.github.codemonstur:embedded-redis:1.4.3")
 
+    // aws
+    implementation("io.awspring.cloud:spring-cloud-starter-aws")
+    implementation("io.findify:s3mock_2.13:0.2.6")
+    // testImplementation("com.adobe.testing:s3mock:3.7.3")
+    // testImplementation("com.adobe.testing:s3mock-testcontainers:3.7.3")
+    // testImplementation("com.adobe.testing:s3mock-junit5:3.7.3")
 }
 
 tasks.withType<KotlinCompile> {

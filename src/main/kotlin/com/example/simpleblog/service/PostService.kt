@@ -16,7 +16,7 @@ import org.springframework.web.multipart.MultipartFile
 @Service
 class PostService(
     private val postRepository: PostRepository,
-    private val localFileUploaderService: FileUploaderService
+    private val localS3FileUploaderServiceImpl: FileUploaderService
 ) {
     // @PreAuthorize("hasRole('ADMIN')")
     // @PostAuthorize("hasRole('ADMIN') or hasRole('USER')")
@@ -41,6 +41,6 @@ class PostService(
     }
 
     fun savePostImg(image: MultipartFile): String {
-        return localFileUploaderService.upload(image)
+        return localS3FileUploaderServiceImpl.upload(image)
     }
 }

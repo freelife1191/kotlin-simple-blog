@@ -37,7 +37,7 @@
 - [X] blog 33. File Uploader with LocalFolder
 - [X] blog 34. File Uploader with LocalFolder 2
 - [X] blog 35. Custom JsonSerializer
-- [ ] blog 36. Embedded S3 Config
+- [X] blog 36. Embedded S3 Config
 - [ ] blog 37. 계층형 댓글 설계 - 1
 - [ ] blog 38. Service Layer Test With Mockito
 - [ ] blog 39. 계층형 댓글 설계 - 2
@@ -273,4 +273,9 @@ front: react + typescript + zustand
 
 ## blog 35. Custom JsonSerializer
 - id, createdAt, updatedAt 공통 속성 BaseDto, BaseEntity 로 리팩토링
-- Custom JsonSerializer 로 객체 응답시 LocalDateTime JSON Format 공통 설정 
+- Custom JsonSerializer 로 객체 응답시 LocalDateTime JSON Format 공통 설정
+
+## blog 36. Embedded S3 Config
+- S3Mock 설정
+- Embedded S3 업로드 기능 추가
+- LocalFileUpload -> LocalS3FileUploader
