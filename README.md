@@ -38,7 +38,7 @@
 - [X] blog 34. File Uploader with LocalFolder 2
 - [X] blog 35. Custom JsonSerializer
 - [X] blog 36. Embedded S3 Config
-- [ ] blog 37. 계층형 댓글 설계 - 1
+- [X] blog 37. 계층형 댓글 설계 - 1
 - [ ] blog 38. Service Layer Test With Mockito
 - [ ] blog 39. 계층형 댓글 설계 - 2
 - [ ] blog 40. Redis를 활용한 검색어 자동완성 API
@@ -279,3 +279,7 @@ front: react + typescript + zustand
 - S3Mock 설정
 - Embedded S3 업로드 기능 추가
 - LocalFileUpload -> LocalS3FileUploader
+
+## blog 37. 계층형 댓글 설계 - 1
+- 댓글 등록 기능 추가
+- 계층형 댓글 등록 기능 추가

@@ -24,17 +24,10 @@ class GlobalExceptionHandler {
         return ResponseEntity(of, HttpStatus.BAD_REQUEST)
     }
 
-    @ExceptionHandler(MemberNotFoundException::class)
-    fun handleMemberNotFoundException(e: MemberNotFoundException): ResponseEntity<ErrorResponse> {
-        log.error { "handleMemberNotFoundException $e" }
-        val of = ErrorResponse.of(ErrorCode.MEMBER_NOT_FOUND)
-        return ResponseEntity(of, HttpStatus.NOT_FOUND)
-    }
-
     @ExceptionHandler(EntityNotFoundException::class)
     fun handleEntityNotFoundException(e: EntityNotFoundException): ResponseEntity<ErrorResponse> {
         log.error { "handleEntityNotFoundException $e" }
-        val of = ErrorResponse.of(ErrorCode.ENTITY_NOT_FOUND)
+        val of = ErrorResponse.of(e.errorCode)
         return ResponseEntity(of, HttpStatus.NOT_FOUND)
     }
 

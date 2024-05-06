@@ -1,6 +1,7 @@
 package com.example.simpleblog.service
 
 import com.example.simpleblog.domain.post.*
+import com.example.simpleblog.exception.PostNotFoundException
 import com.example.simpleblog.service.common.FileUploaderService
 import com.example.simpleblog.service.common.LocalFileUploaderServiceImpl
 import com.example.simpleblog.util.dto.SearchCondition
@@ -37,7 +38,7 @@ class PostService(
 
     @Transactional(readOnly = true)
     fun findPostById(id: Long): PostRes {
-        return postRepository.findById(id).orElseThrow().toDto();
+        return postRepository.findById(id).orElseThrow{ throw PostNotFoundException(id) }.toDto()
     }
 
     fun savePostImg(image: MultipartFile): String {

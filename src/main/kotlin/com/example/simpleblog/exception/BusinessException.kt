@@ -5,7 +5,7 @@ package com.example.simpleblog.exception
  */
 sealed class BusinessException: RuntimeException {
 
-    private var errorCode: ErrorCode
+    var errorCode: ErrorCode
         get() {
             return this.errorCode
         }
